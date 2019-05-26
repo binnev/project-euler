@@ -2,35 +2,46 @@
 Largest palindrome product
 Problem 4
 A palindromic number reads the same both ways. The largest palindrome made
-from the product of two 2-digit numbers is 9009 = 91 × 99.
+from the product of two 2-digit numbers is 9009 = 91 * 99.
 
 Find the largest palindrome made from the product of two 3-digit numbers.
 """
 
-start, end = 1,9999
-candidates = list(range(start, end+1))
-candidates.reverse()
-palindromes = list()
-jj_crit=None
+start, end = 100, 999                   # bounds for all possible 3-digit numbers
+candidates = list(range(start, end+1))  # create list of all 3-digit numbers
+candidates.reverse()                    # reverse so that we can start from the largest
+palindromes = list()                    # empty list to store palindromes
+jj_crit = len(candidates)               # limits the search area
 
-# generate all the products and put them in a set (avoiding duplicates)
+
+def is_palindrome(number):
+    p = str(number)   # convert to string so we can reverse digits easily
+    if p == p[::-1]:  # if the number is equal to its reverse
+        return True
+    else:
+        return False
+
+
+""" Visualise a grid of the candidate numbers multiplied together to create all
+possible products, with the largest number (999*999) in the top left.
+
+We will go through each row until we find a palindrome product. Then we will limit the
+search area to avoid needlessly finding smaller palindromes. """
+
+# for each candidate number
 for ii, c in enumerate(candidates):
-    if jj_crit is not None:
-        if ii >= jj_crit:
-            break
+    # generate a row of products
     row = candidates[ii:jj_crit]
-#    print("this row: from {} to {}".format(ii,jj_crit))
     products = [c*r for r in row]
-#    print("c={} products={}".format(c,products).rjust(70))
-    for jj, r in enumerate(row):
-        p = str(c*r)  # find the products in descending order
-        mid = round(len(p)/2)
-        if p[:mid] == p[:mid-1:-1]:  # palindrome test
-#            print("found a palindrome ({}) at ii = {}, jj = {}, c = {}, r = {}".format(p,ii,jj,c,r))
-            palindromes.append(int(p))
-            jj_crit=jj+ii
-            break  # stop searching in this row
+    # for each product
+    for jj, p in enumerate(products):
+        if is_palindrome(p):  # if it's a palindrome
+            palindromes.append(p)  # add it to the list
+            # update the max search area; this limits the length of future rows
+            jj_crit = jj + ii
+            break  # stop searching in this row; subsequent palindromes will be smaller
+    # limit the search area in the ii direction too
+    if ii >= jj_crit:
+        break
 
-#palindromes = sorted(palindromes, reverse=True)
 print(max(palindromes))
-#%%
