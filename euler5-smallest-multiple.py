@@ -1,28 +1,15 @@
-def prime_factors(number):
-    from math import sqrt
-    N = number
-    factors = []
-    product = 1
-    p = 2
+"""
+Smallest multiple
 
-    while product != number:  # done
-        if p <= sqrt(number):  # done
-            while N % p == 0:
-                factors.append(p)
-                N = int(N/p)
-                product *= p
-            p += 1 if p % 2 == 0 else 2
+Problem 5
+2520 is the smallest number that can be divided by each of the numbers from 1 to 10
+without any remainder.
 
-        else:  # if p > sqrt(number) -- done
-            if N != 1:  # done
-                factors.append(N)
-                product *= N  # done
+What is the smallest positive number that is evenly divisible by all of the numbers
+from 1 to 20?
+"""
 
-    # organise into a dict
-    factors = {key: factors.count(key) for key in set(factors)}
-
-    return factors
-
+from euler_functions import prime_factors
 
 def prod(vector):
     product = 1
@@ -30,25 +17,21 @@ def prod(vector):
         product *= v
     return product
 
+""" Here's the plan: find the prime factors of all the divisors 1 to 20, and use these
+to find the smallest multiple of all divisors. """
 
 start, end = 2, 20
-
-factors = {}
-for n in range(start, end+1):
-
-    factors_n = prime_factors(n)
-
-    for f, p in factors_n.items():
-
+factors = dict()  # empty dict to hold all factors
+for n in range(start, end+1):  # for each divisor
+    factors_n = prime_factors(n)  # find its prime factors
+    for f, p in factors_n.items():  # for each factor and exponent in the divisor
+        # update the global factors dict so that the factor stored has an exponent
+        # equal to the one from the divisor
         if f in factors:
             if factors[f] < p:
                 factors[f] = p
         else:
             factors[f] = p
 
-product = prod([key**value for key, value in factors.items()])
-
-print("product = ", product)
-print("check:")
-for n in range(start, end+1):
-    print("{} / {} gives {} remainder".format(product, n, product%n))
+# assemble the smallest multiple
+print(prod([factor**exponent for factor, exponent in factors.items()]))
