@@ -7,13 +7,13 @@ If we list all the natural numbers below 10 that are multiples of 3 or 5, we get
 Find the sum of all the multiples of 3 or 5 below 1000.
 """
 
-N = 10000000
+N = 1000
 
 # brute force method: test divisibility of every number
 multiples = []
 for n in range(N):
-	if (n % 3 == 0) or (n % 5 == 0):
-		multiples.append(n)
+    if (n % 3 == 0) or (n % 5 == 0):
+        multiples.append(n)
 
 print(sum(multiples))
 # [Finished in 8.5s] for N = 10000000
