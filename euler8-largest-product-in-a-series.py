@@ -60,7 +60,7 @@ def prod(vector):
 
 length = 13
 products = []
-for ii in range(len(number) - 1 - length):
+for ii in range(len(number) -1 -length):
     digits = number[ii:ii+length]
     products.append(prod(digits))
 print(max(products))
