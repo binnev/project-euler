@@ -66,18 +66,14 @@ for ii in range(grid.shape[0]):  # scroll through the rows
         if jj+span <= grid.shape[1]:  # horizontal
             vector = grid[ii, jj:jj+span]
             products.add(prod(vector))
-#            print(vector, " has product ", prod(vector))
         if ii+span <= grid.shape[0]:  # vertical
             vector = grid[ii:ii+span, jj]
             products.add(prod(vector))
-#            print(vector, " has product ", prod(vector))
         if (ii+span <= grid.shape[0]) and (jj+span <= grid.shape[1]):  # diag down
             vector = grid[range(ii,ii+span), range(jj,jj+span)]
             products.add(prod(vector))
-#            print(vector, " has product ", prod(vector))
         if (ii-span >= 0) and (jj+span <= grid.shape[1]):  # diag up
             vector = grid[range(ii,ii-span,-1), range(jj,jj+span)]
             products.add(prod(vector))
-#            print(vector, " has product ", prod(vector))
 
 print(max(products))
