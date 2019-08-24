@@ -77,3 +77,8 @@ def nonprime_factors(number):
         if n > number:
             break
     return factors
+
+
+def product(iterable):
+    from functools import reduce
+    return reduce(lambda a, b: a * b, iterable)

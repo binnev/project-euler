@@ -9,13 +9,7 @@ What is the smallest positive number that is evenly divisible by all of the numb
 from 1 to 20?
 """
 
-from euler_functions import prime_factors
-
-def prod(vector):
-    product = 1
-    for v in vector:
-        product *= v
-    return product
+from euler_functions import prime_factors, product
 
 """ Here's the plan: find the prime factors of all the divisors 1 to 20, and use these
 to find the smallest multiple of all divisors. """
@@ -34,4 +28,4 @@ for n in range(start, end+1):  # for each divisor
             factors[f] = p
 
 # assemble the smallest multiple
-print(prod([factor**exponent for factor, exponent in factors.items()]))
+print(product([factor**exponent for factor, exponent in factors.items()]))
