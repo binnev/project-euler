@@ -30,6 +30,7 @@ What is the greatest product of four adjacent numbers in the same direction (up,
 """
 
 import numpy as np
+from euler_functions import product as prod
 
 grid = """
 08 02 22 97 38 15 00 40 00 75 04 05 07 78 52 12 50 77 91 08
@@ -55,14 +56,8 @@ grid = """
 
 grid = [g.split(" ") for g in grid.split("\n")]  # split string into entries
 del grid[0]
-grid = np.array([[int(ii) for ii in row] for row in grid])  # convert to ints
+grid = np.array(grid).astype(int)
 
-def prod(vector):
-    product = 1
-    for v in vector:
-        product *= v
-    return product
-#%%
 span = 4
 products = set()
 # scan horizontal spans
