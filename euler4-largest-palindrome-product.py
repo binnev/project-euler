@@ -16,10 +16,7 @@ jj_crit = len(candidates)               # limits the search area
 
 def is_palindrome(number):
     p = str(number)   # convert to string so we can reverse digits easily
-    if p == p[::-1]:  # if the number is equal to its reverse
-        return True
-    else:
-        return False
+    return p == p[::-1]  # if the number is equal to its reverse
 
 
 """ Visualise a grid of the candidate numbers multiplied together to create all
