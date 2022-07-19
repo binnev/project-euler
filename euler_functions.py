@@ -1,4 +1,6 @@
 import math
+import time
+from contextlib import contextmanager
 
 
 def sieve_primes(N):
@@ -106,3 +108,11 @@ def product(iterable):
     from functools import reduce
 
     return reduce(lambda a, b: a * b, iterable)
+
+
+@contextmanager
+def profile():
+    t1 = time.perf_counter()
+    yield
+    t2 = time.perf_counter()
+    print(f"time = {t2-t1}")

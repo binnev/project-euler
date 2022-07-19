@@ -6,7 +6,15 @@ What is the 10001st prime number?
 
 """
 
-from euler_functions import sieve_primes
+from euler_functions import sieve_primes, primes_by_trial_division, profile
+N = 10000
 
-primes = sorted(sieve_primes(1000000))
-print(primes[10001 - 1])
+with profile():
+    primes = sorted(sieve_primes(104744))
+    print(primes[N])
+
+with profile():
+    for ii, prime in enumerate(primes_by_trial_division()):
+        if ii == N:
+            print(prime)
+            break
