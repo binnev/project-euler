@@ -1,3 +1,6 @@
+import math
+
+
 def sieve_primes(N):
     """ function to generate the list of primes below N, using the sieve of
     Eratosthenes """
@@ -17,6 +20,24 @@ def sieve_primes(N):
     primes = set(ints).difference(composites)
     return primes
 
+
+def primes_by_trial_division(limit=math.inf):
+    known_primes = []
+
+    def is_prime(n):
+        for p in known_primes:
+            if p > math.sqrt(n):
+                return True
+            if n % p == 0:
+                return False
+        return True
+
+    candidate = 1
+    while candidate < limit:
+        candidate += 1
+        if is_prime(candidate):
+            known_primes.append(candidate)
+            yield candidate
 
 def prime_factors(number, output="dict"):
     """ function to find the prime factors of a number by (modified) trial division.
