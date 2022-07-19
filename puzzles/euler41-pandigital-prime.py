@@ -11,6 +11,7 @@ What is the largest n-digit pandigital prime that exists?
 
 from itertools import combinations, permutations
 import sys
+
 codePath = r"C:\gdrive\code\python"
 if codePath not in sys.path:
     sys.path.insert(0, codePath)
@@ -19,7 +20,7 @@ from myfunctions import sieve_primes, prime_factors
 from math import sqrt
 
 for dd in reversed(range(1, 10)):
-    digits = "".join(str(i) for i in reversed(range(1,dd+1)))
+    digits = "".join(str(i) for i in reversed(range(1, dd + 1)))
     # need primes up to the square root of the largest pandigital
     limit = round(sqrt(int(digits)))
     prime_endings = "1379"  # use this to filter out definite non-primes easily
@@ -36,7 +37,7 @@ for dd in reversed(range(1, 10)):
         limit = sqrt(N)
 
         for p in primes:
-            if p > limit: # if we get above sqrt(N),
+            if p > limit:  # if we get above sqrt(N),
                 break  # stop trial dividing
             if N % p == 0:  # if p is a prime factor of N
                 isPrime = False  # set prime flag to false

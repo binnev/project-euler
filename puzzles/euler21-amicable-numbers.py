@@ -19,10 +19,11 @@ from time import clock
 
 t1 = clock()
 
+
 def d(N, debug=False):
     n = 1  # initialise n
     divisors = []
-    limit = sqrt(N)#ceil(sqrt(N))
+    limit = sqrt(N)  # ceil(sqrt(N))
     while n <= limit:  # search up to the square root
         if N % n == 0:  # if it divides evenly
             divisors.append(n)  # store the divisor
@@ -38,6 +39,7 @@ def d(N, debug=False):
     else:
         return sum(set(divisors))
 
+
 amicable = []
 limit = 10000
 N = 1  # initialise
@@ -51,6 +53,6 @@ while N < limit:
 
 print(sum(amicable))
 
-print("time elapsed:",clock()-t1)
+print("time elapsed:", clock() - t1)
 
 #%%

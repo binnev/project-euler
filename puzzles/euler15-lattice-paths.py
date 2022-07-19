@@ -11,22 +11,24 @@ from myfunctions import visualise_dict
 
 t1 = time.clock()
 
+
 def pascal_row(N):
     """Function to generate row N of Pascal's Triangle.
     Start with 1, and multiply this by (Nrow-s)/(1+s), where s is horizontal
     steps. For row N, the width of the triangle is N+1, and the number of steps
     S is N-1.
     """
-    N=20
+    N = 20
     row = [1]
     for s in range(N):
-        row.append(int(row[-1] * (N-s)/(1+s)))
+        row.append(int(row[-1] * (N - s) / (1 + s)))
     return row
+
 
 P = pascal_row(20)
 sum(p**2 for p in P)
 t2 = time.clock()
-print("elapsed time =",t2-t1)
+print("elapsed time =", t2 - t1)
 # %% trying to generate all permutations myself
 """
 N = 10  # grid edge size

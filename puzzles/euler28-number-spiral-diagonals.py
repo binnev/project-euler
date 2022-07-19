@@ -22,15 +22,15 @@ in the same way?
 
 N = 1001  # size of the spiral. Must be odd.
 diag = 0
-for n in range(1, N+1, 2):
+for n in range(1, N + 1, 2):
     if n == 1:
         diag += 1
         continue
     # sum of the corner values
-    diag += (sum(n**2-(n-1)*i for i in range(4)))
+    diag += sum(n**2 - (n - 1) * i for i in range(4))
 
 print(diag)
 
 # %% can I do it descending from N to 0 and in a one liner
 
-sum(sum(n**2-(n-1)*i for i in range(4)) for n in range(1001, 1, -2)) + 1
+sum(sum(n**2 - (n - 1) * i for i in range(4)) for n in range(1001, 1, -2)) + 1

@@ -21,6 +21,7 @@ Find the sum of all 0 to 9 pandigital numbers with this property.
 """
 from itertools import combinations, permutations
 import sys
+
 codePath = r"C:\gdrive\code\python"
 if codePath not in sys.path:
     sys.path.insert(0, codePath)
@@ -36,7 +37,7 @@ for p in pans:
     success = True  # assume number is successful
 
     for shift, prime in zip(range(1, 8), primes):
-        sub = int(p[shift:shift+3])
+        sub = int(p[shift : shift + 3])
 
         if sub % prime != 0:
             success = False

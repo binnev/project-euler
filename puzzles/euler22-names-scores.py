@@ -17,8 +17,8 @@ What is the total of all the name scores in the file?
 
 """
 
-f = sorted(open("../p022_names.txt").read().replace('"', '').split(","))
-scores = [sum(ord(c)-64 for c in s) for s in f]
-print(sum([w*p for w, p in zip(scores, range(1, len(f)+1))]))
+f = sorted(open("../p022_names.txt").read().replace('"', "").split(","))
+scores = [sum(ord(c) - 64 for c in s) for s in f]
+print(sum([w * p for w, p in zip(scores, range(1, len(f) + 1))]))
 
 # %%

@@ -22,10 +22,10 @@ i = 0
 while len(decimal) <= limit:
     decimal += str(i)
     i += 1
-    
+
 product = 1
 for p in range(7):
     i = 10**p
     product *= int(decimal[i])
-    
+
 print(product)

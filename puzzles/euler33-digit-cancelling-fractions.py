@@ -19,7 +19,7 @@ find the value of the denominator.
 import itertools as it
 
 # find all the possible 2-digit numbers we can use as numerator/denominator
-numbers = [str(i) for i in range(10,100)]
+numbers = [str(i) for i in range(10, 100)]
 
 # find all the ways in which we can pair up these numbers.
 pairs = list(it.combinations(numbers, 2))
@@ -50,12 +50,12 @@ for a, b in pairs:
             continue
 
         # evaluate the fractions
-        frac = int(a)/int(b)
-        frac_new = int(a_new)/int(b_new)
+        frac = int(a) / int(b)
+        frac_new = int(a_new) / int(b_new)
         if frac == frac_new:
             solutions.add((int(a), int(b)))
 
-print("found",len(solutions),"solutions:",solutions)
+print("found", len(solutions), "solutions:", solutions)
 
 numerator = 1
 denominator = 1

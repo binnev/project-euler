@@ -13,8 +13,8 @@ numbers and the square of the sum.
 """
 
 N = 100
-natural = range(1, N+1)
+natural = range(1, N + 1)
 sum_of_squares = sum(n**2 for n in natural)
-square_of_sums = sum(natural)**2
+square_of_sums = sum(natural) ** 2
 
 print(square_of_sums - sum_of_squares)

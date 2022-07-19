@@ -16,6 +16,7 @@ How many circular primes are there below one million?
 
 import sys
 from time import clock
+
 codePath = "C:/gdrive/code/python"
 if codePath not in sys.path:
     sys.path.insert(0, codePath)
@@ -30,7 +31,7 @@ for n in primes:
     isPrime = True  # assume true
 
     for ii in range(1, len(n)):
-        rotation = n[-ii:]+n[:-ii]
+        rotation = n[-ii:] + n[:-ii]
         if rotation not in primes:
             isPrime = False
             break  # stop generating rotations
@@ -38,6 +39,6 @@ for n in primes:
     if isPrime:
         winners.append(n)
 
-print("found",len(winners),"circular primes")
+print("found", len(winners), "circular primes")
 t2 = clock()
-print("time elapsed:", t2-t1)
+print("time elapsed:", t2 - t1)

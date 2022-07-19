@@ -27,28 +27,28 @@ power = 5
 num_digits = 2  # initialise with at least 2 digits i.e. N = 99
 
 # while the max digit power sum is greater than the max N
-while 9**power*num_digits > int("9"*num_digits):
+while 9**power * num_digits > int("9" * num_digits):
     num_digits += 1  # increase the number of digits by 1
 
-N = range(2, int("9"*num_digits))  # range of trial numbers
+N = range(2, int("9" * num_digits))  # range of trial numbers
 
 # sum of numbers for which the digit power sum == the number
 sum(n for n in N if sum(d**power for d in (int(i) for i in str(n))) == n)
 
 # %% nice plots
-fig, ax = plt.subplots(figsize=(5,5))
+fig, ax = plt.subplots(figsize=(5, 5))
 plt.rc("font", size=9)
 ax.loglog()
 powers = 2, 3, 4, 5
-colours = plt.cm.inferno(np.linspace(0.2, .9, len(powers)))
+colours = plt.cm.inferno(np.linspace(0.2, 0.9, len(powers)))
 
 for power, colour in zip(powers, colours):
     # work out how many orders of magnitude of N to search
     num_digits = 2
-    while 9**power*num_digits > int("9"*num_digits):
+    while 9**power * num_digits > int("9" * num_digits):
         num_digits += 1
 
-    N = range(2, int("9"*num_digits))  # range of trial numbers
+    N = range(2, int("9" * num_digits))  # range of trial numbers
     S = []  # digit power sums go here
     yes = []  # numbers that map to themselves go here
 
@@ -63,7 +63,7 @@ for power, colour in zip(powers, colours):
     plt.plot(N, S, c=colour, zorder=-power, label="p={}".format(power))
     plt.plot(yes, yes, "s", ms=10, mfc=colour, mec="k")
     for y in yes:
-        plt.text(y*1.2, y, y, ha="left", va="center")
+        plt.text(y * 1.2, y, y, ha="left", va="center")
 
 plt.plot(N, N, "-k", lw=2, label="N")
 plt.legend()

@@ -34,10 +34,9 @@ a = b = 1
 ii = 2
 
 while len(str(b)) < 1e3:
-    c = a + b   # calculate next number before reassignment
-    a = b       # first number steps one
-    b = c       # second number steps one
+    c = a + b  # calculate next number before reassignment
+    a = b  # first number steps one
+    b = c  # second number steps one
     ii += 1
 
-print("index =",ii,"number = ",b)
-
+print("index =", ii, "number = ", b)

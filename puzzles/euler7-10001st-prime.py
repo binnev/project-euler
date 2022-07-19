@@ -9,4 +9,4 @@ What is the 10001st prime number?
 from euler_functions import sieve_primes
 
 primes = sorted(sieve_primes(1000000))
-print(primes[10001-1])
+print(primes[10001 - 1])

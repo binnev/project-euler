@@ -16,6 +16,7 @@ NOTE: 2, 3, 5, and 7 are not considered to be truncatable primes.
 
 import sys
 from time import clock
+
 codePath = "C:/gdrive/code/python"
 if codePath not in sys.path:
     sys.path.insert(0, codePath)
@@ -28,24 +29,25 @@ truncatability
 primes = {str(p) for p in sieve_primes(1000000)}  # generate primes; store as str
 #%
 def is_truncatable(n):
-    
+
     n = str(n)
-    
+
     if n not in primes:
-        raise Exception(n," ain't prime, yo")
-        
+        raise Exception(n, " ain't prime, yo")
+
     for ii in range(1, len(n)):
 
         # remove digits from the right
         if n[:-ii] not in primes:
-#            print(n[:-ii],"ain't prime, yo")
+            #            print(n[:-ii],"ain't prime, yo")
             return False
         # remove digits from the left
         if n[ii:] not in primes:
             return False
-#            print(n[ii:],"ain't prime, yo")
-            
+    #            print(n[ii:],"ain't prime, yo")
+
     return True
+
 
 truncatable = []
 bad = "2", "3", "5", "7"
@@ -72,37 +74,39 @@ have some way of checking if the expanded numbers are prime... I think I'll
 need the prime list anyway. But maybe I can still save computational time. 
 """
 
-limit = 6  # number of digits to search 
-primes = {str(p) for p in sieve_primes(1*10**limit)}  # generate primes; store as str
+limit = 6  # number of digits to search
+primes = {str(p) for p in sieve_primes(1 * 10**limit)}  # generate primes; store as str
 
 start = "2", "3", "5", "7"  # digits I can start the number with
 add = "1", "3", "7", "9"  # numbers I can add to the right
 
+
 def expand_number(n, level=0, storage=None):  # get the recursion working on this.
-    
+
     if level == 0:
-#        print("level = 0 so we're initialising storage = []")
+        #        print("level = 0 so we're initialising storage = []")
         storage = []  # initialise storage
-        
+
     if len(n) >= limit:
-#        print(n,"has len =",len(n),">= limit",limit)
+        #        print(n,"has len =",len(n),">= limit",limit)
         storage.append(n)
-#        print("storage =",storage)
+        #        print("storage =",storage)
         return None
-        
+
     for a in add:
-#        print("adding",a,"to",n)
-        expand_number(n+a, level+1, storage)
-    
-    if level == 0:  
+        #        print("adding",a,"to",n)
+        expand_number(n + a, level + 1, storage)
+
+    if level == 0:
         return storage  # return the list
+
 
 truncatable = []
 for n in start:
     for m in expand_number(n):
         if is_truncatable(p):
             truncatable.append(p)
-            
+
             """no, this doesn't work because we only consider number of length
             = limit. I need to find the truncatable numbers, then expand THOSE"""
 

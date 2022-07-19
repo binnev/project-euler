@@ -19,38 +19,41 @@ import matplotlib.pyplot as plt, numpy as np
 from functools import reduce
 from math import sqrt
 
+
 def pent(n):
-    return int(n*(3*n-1)/2)
+    return int(n * (3 * n - 1) / 2)
+
+
 pk = 1
 
+
 def is_pent(P):
-    n = (0.5 + sqrt(0.25+6*P))/3
+    n = (0.5 + sqrt(0.25 + 6 * P)) / 3
     return True if n % 1 == 0 else False
 
-#Psums, Pdifs, Ds = [], [], []
-#pents = [pent(n) for n in range(1, 10)]
-#diffs = [pents[i]-pents[i-1] for i in range(1, len(pents))]
-#sums =  [pents[i]+pents[i-1] for i in range(1, len(pents))]
 
-#fig, ax = plt.subplots()
+# Psums, Pdifs, Ds = [], [], []
+# pents = [pent(n) for n in range(1, 10)]
+# diffs = [pents[i]-pents[i-1] for i in range(1, len(pents))]
+# sums =  [pents[i]+pents[i-1] for i in range(1, len(pents))]
+
+# fig, ax = plt.subplots()
 
 pk = 1
 ii = 2
 while True:
     pj = pk
     pk = pent(ii)
-    print("pj and pk are:",pj,pk)
-    s = pk+pj
-    d = pk-pj
-    
+    print("pj and pk are:", pj, pk)
+    s = pk + pj
+    d = pk - pj
+
     if is_pent(d) and is_pent(s):
-        raise Exception("found them:",pj,pk)
-    
+        raise Exception("found them:", pj, pk)
+
     ii += 1
-#    
-#x = np.arange(1, len(pents)+1)
-#plt.plot(x, pents, "-k", ms=10, mfc="none")
-#plt.plot(x+.5, Psums, "-g")
-#plt.plot(x+.5, Pdifs, "-r")
-
-
+#
+# x = np.arange(1, len(pents)+1)
+# plt.plot(x, pents, "-k", ms=10, mfc="none")
+# plt.plot(x+.5, Psums, "-g")
+# plt.plot(x+.5, Pdifs, "-r")

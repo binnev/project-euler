@@ -16,7 +16,7 @@ to find the smallest multiple of all divisors. """
 
 start, end = 2, 20
 factors = dict()  # empty dict to hold all factors
-for n in range(start, end+1):  # for each divisor
+for n in range(start, end + 1):  # for each divisor
     factors_n = prime_factors(n)  # find its prime factors
     for f, p in factors_n.items():  # for each factor and exponent in the divisor
         # update the global factors dict so that the factor stored has an exponent

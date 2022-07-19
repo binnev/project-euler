@@ -19,26 +19,28 @@ concatenated product of an integer with (1,2, ... , n) where n > 1?
 
 """
 
+
 def is_pandigital(i):
     i = str(i)
     return True if sorted(i) == constant else False
+
 
 constant = [str(i) for i in range(1, 10)]
 pans = []
 
 for i in range(9999):
-#    print("considering",i)
+    #    print("considering",i)
     product = ""
     ms = []
     m = 1
-    
+
     while len(product) < 9:
-        product += str(i*m)
+        product += str(i * m)
         ms.append(m)
         m += 1
-        
+
     if is_pandigital(product):
-        print(i,"multiplied by",ms,"gives pandigital",product)
+        print(i, "multiplied by", ms, "gives pandigital", product)
         pans.append(product)
 
 print(max(pans))

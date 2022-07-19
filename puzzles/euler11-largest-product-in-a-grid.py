@@ -1,4 +1,4 @@
-#Largest product in a grid
+# Largest product in a grid
 """
 In the 20×20 grid below, four numbers along a diagonal line have been marked in red.
 
@@ -63,17 +63,17 @@ products = set()
 # scan horizontal spans
 for ii in range(grid.shape[0]):  # scroll through the rows
     for jj in range(grid.shape[1]):  # scroll through the columns
-        if jj+span <= grid.shape[1]:  # horizontal
-            vector = grid[ii, jj:jj+span]
+        if jj + span <= grid.shape[1]:  # horizontal
+            vector = grid[ii, jj : jj + span]
             products.add(prod(vector))
-        if ii+span <= grid.shape[0]:  # vertical
-            vector = grid[ii:ii+span, jj]
+        if ii + span <= grid.shape[0]:  # vertical
+            vector = grid[ii : ii + span, jj]
             products.add(prod(vector))
-        if (ii+span <= grid.shape[0]) and (jj+span <= grid.shape[1]):  # diag down
-            vector = grid[range(ii,ii+span), range(jj,jj+span)]
+        if (ii + span <= grid.shape[0]) and (jj + span <= grid.shape[1]):  # diag down
+            vector = grid[range(ii, ii + span), range(jj, jj + span)]
             products.add(prod(vector))
-        if (ii-span >= 0) and (jj+span <= grid.shape[1]):  # diag up
-            vector = grid[range(ii,ii-span,-1), range(jj,jj+span)]
+        if (ii - span >= 0) and (jj + span <= grid.shape[1]):  # diag up
+            vector = grid[range(ii, ii - span, -1), range(jj, jj + span)]
             products.add(prod(vector))
 
 print(max(products))

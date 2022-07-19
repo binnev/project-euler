@@ -37,7 +37,7 @@ def sieve_primes(N):
     # Eratosthenes
 
     N = round(N)
-    ints = list(range(2,N))
+    ints = list(range(2, N))
     composites = set([])
 
     # start sieving from the smallest prime -- 2
@@ -53,6 +53,7 @@ def sieve_primes(N):
     ints = set(ints).difference(composites)
     return ints
 
+
 def is_prime(n):
     if n < 0:  # mod(n)
         n = -n
@@ -60,13 +61,14 @@ def is_prime(n):
         raise Exception("we've run outta primes")
     return True if n in primes else False
 
+
 t1 = clock()
 
 primes = sieve_primes(100000)  # sieve the primes
 max_primes = max(primes)  # evaluate this once instead of on the fly each time
-quad = lambda n, a, b: n**2 + a*n + b  # define func for quadratics
-a_range = range(-999, 999+1)
-b_range = range(-1000, 1000+1)
+quad = lambda n, a, b: n**2 + a * n + b  # define func for quadratics
+a_range = range(-999, 999 + 1)
+b_range = range(-1000, 1000 + 1)
 n_max = 0
 a_crit, b_crit = None, None
 
@@ -86,7 +88,7 @@ for a in a_range:
         # scan downward from n_max to zero (more likely to hit non-primes
         # sooner this way) and if we find a non-prime, discard this a, b pair
         prime = True  # assume result is prime to start with
-        n = n_max-1  # initialise n at n_max-1 (we already tested n_max)
+        n = n_max - 1  # initialise n at n_max-1 (we already tested n_max)
         # decrement n to zero and see if they are all primes
         while n >= 0:
             if not is_prime(quad(n, a, b)):
@@ -99,7 +101,7 @@ for a in a_range:
         # 3) if 0 <= n <= n_max all yielded primes, then we might be in with a
         # winner. Start scanning upwards from n_max to find a new n_max.
         prime = True  # assume result is prime to start with
-        n = n_max+1  # initialise n at n_max+1 (we already tested n_max)
+        n = n_max + 1  # initialise n at n_max+1 (we already tested n_max)
         # increment n and see if they are all primes
         while True:
             if not is_prime(quad(n, a, b)):
@@ -112,8 +114,8 @@ for a in a_range:
         b_crit = b
 
 t2 = clock()
-print("elapsed time:",t2-t1)
-print("result = ",a_crit*b_crit)
+print("elapsed time:", t2 - t1)
+print("result = ", a_crit * b_crit)
 
 # %% brute force to find the beautiful patterns
 from mpl_toolkits.mplot3d import Axes3D
@@ -122,9 +124,9 @@ from scipy.sparse import lil_matrix
 t1 = clock()
 R = 1000
 
-a_range = range(-(R-1), (R-1)+1)
-b_range = range(-R, R+1)
-#b_range = range(-25, 25+1)
+a_range = range(-(R - 1), (R - 1) + 1)
+b_range = range(-R, R + 1)
+# b_range = range(-25, 25+1)
 N = np.zeros((len(a_range), len(b_range)))
 
 for i, a in enumerate(a_range):
@@ -139,24 +141,23 @@ for i, a in enumerate(a_range):
         N[i, j] = n
 
 t2 = clock()
-print("elapsed time:",t2-t1)
+print("elapsed time:", t2 - t1)
 #%%
 # plot the surface of number of primes found versus coefficients a and b
 aa, bb = np.meshgrid(a_range, b_range)
 aa = aa.T
 bb = bb.T  # not sure why this is required!
-#fig, ax = plt.subplots(figsize=(5,5))
-#plt.setp(ax, xlabel="a", ylabel="b")
+# fig, ax = plt.subplots(figsize=(5,5))
+# plt.setp(ax, xlabel="a", ylabel="b")
 plt.rc("font", size=10)
-#plt.imshow(N.T, cmap=plt.cm.inferno_r, origin="lower")
-#plt.colorbar()
-#fig.savefig("imshow.png", dpi=300)
+# plt.imshow(N.T, cmap=plt.cm.inferno_r, origin="lower")
+# plt.colorbar()
+# fig.savefig("imshow.png", dpi=300)
 
 threshold = 4  # don't plot any values below this
 for threshold in range(10, 71, 2):
     clip = N >= threshold
     xx, yy, zz = aa[clip], bb[clip], N[clip]
-
 
     #    fig = plt.figure(figsize=(10,10))
     #    ax = Axes3D(fig)
@@ -172,21 +173,26 @@ for threshold in range(10, 71, 2):
     # sort data by z value so that higher ones are always on top
     zz, yy, xx = (np.array(i) for i in zip(*sorted(zip(zz, yy, xx))))
 
-    fig, ax = plt.subplots(figsize=(6,5))
-    ax.scatter(xx, yy,
-               np.ones_like(xx)*5,
-               color=plt.cm.inferno_r(zz/N.max()),
-               marker=".",
-               )
-    plt.setp(ax, xlabel="a", ylabel="b",
-             ylim=[-R, R],
-             xlim=[-R, R],
-             xticks=[-1000, 1000],
-             xticklabels=["-1k", "1k"],
-             yticks=[-1000, 1000],
-             yticklabels=["-1k", "1k"],
-             )
-#    plt.axis("square")
+    fig, ax = plt.subplots(figsize=(6, 5))
+    ax.scatter(
+        xx,
+        yy,
+        np.ones_like(xx) * 5,
+        color=plt.cm.inferno_r(zz / N.max()),
+        marker=".",
+    )
+    plt.setp(
+        ax,
+        xlabel="a",
+        ylabel="b",
+        ylim=[-R, R],
+        xlim=[-R, R],
+        xticks=[-1000, 1000],
+        xticklabels=["-1k", "1k"],
+        yticks=[-1000, 1000],
+        yticklabels=["-1k", "1k"],
+    )
+    #    plt.axis("square")
 
     plt.title("(a, b) pairs resulting in at least {} primes".format(threshold))
     fig.savefig("threshold{:03d}.png".format(threshold), dpi=100)
@@ -208,18 +214,20 @@ for a, b, n in zip(xx, yy, zz):
     print("n^2 {:+d}n {:+d} yields {}".format(a, b, int(n)))
 
 # plot the actual results
-fig, ax = plt.subplots(figsize=(10,10))
-plt.scatter(xx, yy,
-           color=plt.cm.inferno_r(zz/N.max()),
-           marker=".",
-           label="data",
-           )
+fig, ax = plt.subplots(figsize=(10, 10))
+plt.scatter(
+    xx,
+    yy,
+    color=plt.cm.inferno_r(zz / N.max()),
+    marker=".",
+    label="data",
+)
 
 # define a function for the curve fit
 def func(a, c, d, e):
-    return c*a**2 + d*a + e
+    return c * a**2 + d * a + e
+
 
 popt, pcov = curve_fit(func, xx, yy)
 
-plt.plot(np.sort(xx), func(np.sort(xx), *popt), 'r-',
-         label="fit")
+plt.plot(np.sort(xx), func(np.sort(xx), *popt), "r-", label="fit")

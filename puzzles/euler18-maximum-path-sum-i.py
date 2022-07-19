@@ -38,6 +38,7 @@ a clever method! ;o)
 """
 # %%
 import time
+
 tStart = time.time()
 
 raw = """75
@@ -59,6 +60,7 @@ raw = """75
 raw = [r.split(" ") for r in raw.split("\n")]  # separate into rows and numbers
 tri = [[int(p) for p in r] for r in raw]  # convert to integers from strings
 
+
 def highest_value_child(tri):
     col = 0  # initialise column location. Set to zero so it chooses the only element in row 0
     values = []
@@ -70,7 +72,7 @@ def highest_value_child(tri):
 
         else:
             # get the cells that are adjacent to the previous column
-            adj = row[col], row[col+1]
+            adj = row[col], row[col + 1]
             # find out whether the max adjacent is left or right
             col += adj.index(max(adj))  # take one step into the max cell
             values.append(max(adj))  # store the max cell
@@ -79,10 +81,14 @@ def highest_value_child(tri):
 
     return indices, values
 
+
 indices, values = highest_value_child(tri)
-print("using the highest value child method, we go through values:\n",
-      values,
-      "which gives a total of:", sum(values))
+print(
+    "using the highest value child method, we go through values:\n",
+    values,
+    "which gives a total of:",
+    sum(values),
+)
 
 # generate the rank triangle
 rank = []
@@ -92,17 +98,17 @@ for ii, row in enumerate(tri):
     for jj, value in enumerate(row):
 
         # identify "parents" and "children"
-        lParent = tri[ii-1][jj-1] if jj-1 >=0 else 0
-        rParent = tri[ii-1][jj] if jj < len(tri[ii-1]) else 0
+        lParent = tri[ii - 1][jj - 1] if jj - 1 >= 0 else 0
+        rParent = tri[ii - 1][jj] if jj < len(tri[ii - 1]) else 0
         parents = lParent, rParent
 
-        lChild = tri[ii+1][jj] if ii+1 < len(tri) else 0
-        rChild = tri[ii+1][jj+1] if ii+1 < len(tri) else 0
+        lChild = tri[ii + 1][jj] if ii + 1 < len(tri) else 0
+        rChild = tri[ii + 1][jj + 1] if ii + 1 < len(tri) else 0
         children = lChild, rChild
 
-#        print("value is:", value,
-#              "\nparents are:", parents,
-#              "\nchildren are:", children)
+        #        print("value is:", value,
+        #              "\nparents are:", parents,
+        #              "\nchildren are:", children)
 
         # calculate rank by summing value and the max parents and children
         r = value + max(parents) + max(children)
@@ -113,12 +119,14 @@ indices, _ = highest_value_child(rank)
 # retrieve the values from tri using indices
 values = [tri[i][j] for i, j in indices]
 
-print("using the highest value child method on the rank triangle, "
-      "we go through values:\n",
-      values,
-      "which gives a total of:", sum(values))
+print(
+    "using the highest value child method on the rank triangle, " "we go through values:\n",
+    values,
+    "which gives a total of:",
+    sum(values),
+)
 
-print ("Run Time = " + str(time.time() - tStart))
+print("Run Time = " + str(time.time() - tStart))
 
 """ for the follow-up problem, use the opposite approach -- start from the
 BOTTOM of the pyramid! """

@@ -7,15 +7,15 @@ from the product of two 2-digit numbers is 9009 = 91 * 99.
 Find the largest palindrome made from the product of two 3-digit numbers.
 """
 
-start, end = 100, 999                   # bounds for all possible 3-digit numbers
-candidates = list(range(start, end+1))  # create list of all 3-digit numbers
-candidates.reverse()                    # reverse so that we can start from the largest
-palindromes = list()                    # empty list to store palindromes
-jj_crit = len(candidates)               # limits the search area
+start, end = 100, 999  # bounds for all possible 3-digit numbers
+candidates = list(range(start, end + 1))  # create list of all 3-digit numbers
+candidates.reverse()  # reverse so that we can start from the largest
+palindromes = list()  # empty list to store palindromes
+jj_crit = len(candidates)  # limits the search area
 
 
 def is_palindrome(number):
-    p = str(number)   # convert to string so we can reverse digits easily
+    p = str(number)  # convert to string so we can reverse digits easily
     return p == p[::-1]  # if the number is equal to its reverse
 
 
@@ -29,7 +29,7 @@ search area to avoid needlessly finding smaller palindromes. """
 for ii, c in enumerate(candidates):
     # generate a row of products
     row = candidates[ii:jj_crit]
-    products = [c*r for r in row]
+    products = [c * r for r in row]
     # for each product
     for jj, p in enumerate(products):
         if is_palindrome(p):  # if it's a palindrome

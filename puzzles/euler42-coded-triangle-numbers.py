@@ -25,16 +25,20 @@ words = open("../p042_words.txt").read().replace('"', "").split(",")
 letters = string.ascii_uppercase
 # define function to score words
 def score(word):
-    return sum(letters.index(l)+1 for l in word)
+    return sum(letters.index(l) + 1 for l in word)
+
+
 # define function for triangle numbers
 def triangle(n):
-    return int(0.5*n*(n+1))
+    return int(0.5 * n * (n + 1))
+
+
 # now compute the triangle numbers
-triangles = [triangle(ii) for ii in range(1,50)]
+triangles = [triangle(ii) for ii in range(1, 50)]
 
 triangle_words = 0
 for word in words:
     if score(word) in triangles:
         triangle_words += 1
 
-print("found",triangle_words,"triangle words")
+print("found", triangle_words, "triangle words")
