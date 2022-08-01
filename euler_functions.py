@@ -4,50 +4,8 @@ import pstats
 from pathlib import Path
 
 
-def read_primes_file() -> list[int]:
-    filename = Path(__file__).parent / "primes.txt"
-    with open(filename.as_posix(), "r") as file:
-        raw = file.read()
-        return list(map(int, raw.split(",")))
-
-
-PRIMES = read_primes_file()
-
-
 def is_even(n: int) -> bool:
     return n % 2 == 0
-
-
-def sieve_primes(N, known_primes: list = None) -> list[int]:
-    primes = known_primes or [2]
-    composites = set()
-    biggest_prime = max(primes)
-    start = biggest_prime + 1 if is_even(biggest_prime) else biggest_prime + 2
-    for n in range(start, N, 2):  # consider only odd numbers
-        if n not in composites:
-            composites.update(range(2 * n, N, n))
-            primes.append(n)
-    return primes
-
-
-def primes_by_trial_division(limit=math.inf) -> list[int]:
-    known_primes = []
-
-    def is_prime(n):
-        square_root = math.sqrt(n)
-        for p in known_primes:
-            if p > square_root:
-                return True
-            if n % p == 0:
-                return False
-        return True
-
-    candidate = 1
-    while candidate < limit:
-        candidate += 1
-        if is_prime(candidate):
-            known_primes.append(candidate)
-            yield candidate
 
 
 def prime_factors(number, output="dict"):
@@ -120,6 +78,4 @@ def product(iterable):
 
 def profile(string: str):
     print(("> " + string + " <").center(100, "="))
-    cProfile.run(string, sort="tottime", filename="foo")
-    p = pstats.Stats("foo")
-    print
+    cProfile.run(string, sort="tottime")
