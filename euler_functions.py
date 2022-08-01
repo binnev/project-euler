@@ -1,34 +1,42 @@
+import cProfile
 import math
-import time
-from contextlib import contextmanager
+import pstats
+from pathlib import Path
 
 
-def sieve_primes(N):
-    """function to generate the list of primes below N, using the sieve of
-    Eratosthenes"""
+def read_primes_file() -> list[int]:
+    filename = Path(__file__).parent / "primes.txt"
+    with open(filename.as_posix(), "r") as file:
+        raw = file.read()
+        return list(map(int, raw.split(",")))
 
-    N = round(N)  # round to nearest integer in case the user passed a float
-    ints = list(range(2, N))  # create list of all integers from 2 to N
-    composites = set()  # collect the composite numbers here
 
-    # for each natural number
-    for i in ints:
-        if i not in composites:  # if this number is not a known composite
-            # generate the multiples of this number up to N
-            mult = set(range(i, N, i)[1:])  # exclude the first one; it's a prime
-            # and add these to the set of composites
-            composites.update(mult)
-    # the difference between the natural numbers and the composites yields the primes
-    primes = set(ints).difference(composites)
+PRIMES = read_primes_file()
+
+
+def is_even(n: int) -> bool:
+    return n % 2 == 0
+
+
+def sieve_primes(N, known_primes: list = None) -> list[int]:
+    primes = known_primes or [2]
+    composites = set()
+    biggest_prime = max(primes)
+    start = biggest_prime + 1 if is_even(biggest_prime) else biggest_prime + 2
+    for n in range(start, N, 2):  # consider only odd numbers
+        if n not in composites:
+            composites.update(range(2 * n, N, n))
+            primes.append(n)
     return primes
 
 
-def primes_by_trial_division(limit=math.inf):
+def primes_by_trial_division(limit=math.inf) -> list[int]:
     known_primes = []
 
     def is_prime(n):
+        square_root = math.sqrt(n)
         for p in known_primes:
-            if p > math.sqrt(n):
+            if p > square_root:
                 return True
             if n % p == 0:
                 return False
@@ -110,9 +118,8 @@ def product(iterable):
     return reduce(lambda a, b: a * b, iterable)
 
 
-@contextmanager
-def profile():
-    t1 = time.perf_counter()
-    yield
-    t2 = time.perf_counter()
-    print(f"time = {t2-t1}")
+def profile(string: str):
+    print(("> " + string + " <").center(100, "="))
+    cProfile.run(string, sort="tottime", filename="foo")
+    p = pstats.Stats("foo")
+    print

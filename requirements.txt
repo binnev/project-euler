@@ -2,3 +2,4 @@ black
 numpy
 pandas
 matplotlib
+pytest
