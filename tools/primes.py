@@ -49,27 +49,30 @@ class Primes:
             return cls.all()
 
     @classmethod
-    def next(cls):
+    def next_by_trial(cls):
         biggest_prime = cls.all()[-1]
         n = biggest_prime + 1 if biggest_prime == 2 else biggest_prime + 2
         while True:
-            n += 2
             if is_prime(n):
                 cls.add(n)
                 return n
+            n += 2
 
-
-def sieve_primes(N) -> tuple[int]:
-    composites = set()
-    biggest_prime = max(Primes.all())
-    new_primes = []
-    start = biggest_prime + 1 if biggest_prime == 2 else biggest_prime + 2
-    for n in range(start, N, 2):  # consider only odd numbers
-        if n not in composites:
-            composites.update(range(2 * n, N, n))
-            new_primes.append(n)
-    Primes.add(*new_primes)
-    return Primes.all()[:N]
+    @classmethod
+    def next_by_sieve(cls, distance=100):
+        biggest_prime = max(Primes.all())
+        end = biggest_prime + distance
+        new_primes = []
+        composites = set()
+        for p in Primes.all():
+            composites.update(range(2 * p, end, p))
+        start = biggest_prime + 1 if biggest_prime == 2 else biggest_prime + 2
+        for n in range(start, end, 2):  # consider only odd numbers
+            if n not in composites:
+                composites.update(range(2 * n, end, n))
+                Primes.add(n)
+                return n
+        # return Primes.all()[:end]
 
 
 def is_prime(n):
@@ -82,10 +85,62 @@ def is_prime(n):
     return True
 
 
-def primes_by_trial_division(N=math.inf) -> list[int]:
+def next_prime_by_trial_division(N=math.inf) -> list[int]:
     biggest_prime = max(Primes.all())
     start = biggest_prime + 1 if biggest_prime == 2 else biggest_prime + 2
     for n in range(start, N, 2):
         if is_prime(n):
             Primes.add(n)
             yield n
+
+
+def sieve_primes(N) -> list[int]:
+    primes = [2]
+    composites = set()
+    for n in range(3, N, 2):  # consider only odd numbers
+        if n not in composites:
+            composites.update(range(2 * n, N, n))
+            primes.append(n)
+    return primes
+
+
+def partial_sieve(N, known_primes: list[int]):
+    primes = known_primes
+    biggest_prime = known_primes[-1]
+    composites = set()
+    if N < biggest_prime:
+        raise ValueError("Known primes are larger than the search space")
+    # populate composites from upper edge of searched space onwards
+    for p in known_primes:
+        number_of_mults, remainder = divmod(biggest_prime, p)
+        highest_mult = biggest_prime - remainder
+        new = list(range(highest_mult + p, N, p))
+        composites.update(new)
+
+    # search space from upper edge of known space onwards
+    start = biggest_prime + 1 if biggest_prime == 2 else biggest_prime + 2
+    for n in range(start, N, 2):
+        if n not in composites:
+            composites.update(range(2 * n, N, n))
+            primes.append(n)
+    return primes[:N]
+
+
+def primes_by_trial_division(limit=math.inf) -> list[int]:
+    known_primes = []
+
+    def is_prime(n):
+        square_root = math.sqrt(n)
+        for p in known_primes:
+            if p > square_root:
+                return True
+            if n % p == 0:
+                return False
+        return True
+
+    candidate = 1
+    while candidate < limit:
+        candidate += 1
+        if is_prime(candidate):
+            known_primes.append(candidate)
+            yield candidate

@@ -5,6 +5,8 @@ By listing the first six prime numbers: 2, 3, 5, 7, 11, and 13, we can see that 
 What is the 10001st prime number?
 
 """
-from tools.primes import Primes
+from tools.primes import sieve_primes
+N = 10000
 
-print(Primes.first(10001)[-1])
+primes = sorted(sieve_primes(104744))
+print(primes[N])
