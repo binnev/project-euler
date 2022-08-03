@@ -115,10 +115,23 @@ def eratosthenes_sieve(limit: int) -> list[int]:
         return []
     primes = [2]
     composites = set()
-    for n in range(3, limit+1, 2):  # consider only odd numbers
+    for n in range(3, limit + 1, 2):  # consider only odd numbers
         if n not in composites:
             composites.update(range(n**2, limit, n))
             primes.append(n)
+    return primes
+
+
+def eratosthenes_sieve2(limit: int) -> list[int]:
+    if limit < 2:
+        return []
+    #          0      1
+    numbers = [False, False] + [True] * (limit - 1)
+    for n in range(2, limit + 1):  # consider only odd numbers
+        if numbers[n]:
+            for composite in range(n**2, limit + 1, n):
+                numbers[composite] = False
+    primes = [index for index, value in enumerate(numbers) if value is True]
     return primes
 
 

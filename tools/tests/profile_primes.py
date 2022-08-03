@@ -4,10 +4,11 @@ from tools import primes
 
 functions = [
     primes.eratosthenes_sieve,
+    primes.eratosthenes_sieve2,
     primes.primes_by_trial_division,
     primes.sundaram_sieve,
 ]
-limit = 999999
+limit = 2000000
 
 
 def profile(func):

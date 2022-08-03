@@ -25,6 +25,7 @@ from tools import primes
     "func",
     [
         primes.eratosthenes_sieve,
+        primes.eratosthenes_sieve2,
         primes.primes_by_trial_division,
         primes.sundaram_sieve,
     ],
