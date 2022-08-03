@@ -85,13 +85,14 @@ def is_prime(n):
     return True
 
 
-def next_prime_by_trial_division(N=math.inf) -> list[int]:
-    biggest_prime = max(Primes.all())
+def next_prime_by_trial_division(primes: list[int]) -> list[int]:
+    biggest_prime = max(primes)
     start = biggest_prime + 1 if biggest_prime == 2 else biggest_prime + 2
-    for n in range(start, N, 2):
+    n = start
+    while True:
         if is_prime(n):
-            Primes.add(n)
-            yield n
+            return n
+        n += 2
 
 
 def sieve_primes(limit) -> list[int]:

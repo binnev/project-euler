@@ -1,6 +1,6 @@
 import pytest
 
-from tools.primes import sieve_primes, partial_sieve
+from tools.primes import sieve_primes, partial_sieve, next_prime_by_trial_division
 
 
 @pytest.mark.parametrize(
@@ -33,3 +33,15 @@ def test_sieve_primes(input, expected_output):
 )
 def test_partial_sieve(limit, known_primes, expected_result):
     assert partial_sieve(limit=limit, primes=known_primes) == expected_result
+
+
+@pytest.mark.parametrize(
+    "input, expected_output",
+    [
+        ([2], 3),
+        ([2, 3], 5),
+        ([2, 3, 5, 7, 11, 13, 17, 19], 23),
+    ],
+)
+def test_next_prime_by_trial_division(input, expected_output):
+    assert next_prime_by_trial_division(input) == expected_output
