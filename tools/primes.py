@@ -77,6 +77,7 @@ class Primes:
 
 
 def is_prime(n: int, primes: list[int]) -> bool:
+    """Trial division"""
     square_root = math.sqrt(n)
     if primes[-1] < square_root:
         raise TrialDivisionError(f"Not enough known primes to check if {n} is prime")
@@ -88,14 +89,19 @@ def is_prime(n: int, primes: list[int]) -> bool:
     return True
 
 
-def next_prime_by_trial_division(primes: list[int]) -> list[int]:
+def next_prime_by_trial_division(primes: list[int]) -> int:
     biggest_prime = max(primes)
     start = biggest_prime + 1 if biggest_prime == 2 else biggest_prime + 2
     n = start
     while True:
-        if is_prime(n):
+        if is_prime(n, primes):
             return n
         n += 2
+
+
+# def next_prime_by_sieve(primes: list[int]) -> int:
+#     biggest_prime = max(primes)
+#     while True:
 
 
 def sieve_primes(limit) -> list[int]:
@@ -110,16 +116,13 @@ def sieve_primes(limit) -> list[int]:
     return primes
 
 
-def partial_sieve(limit, primes: list[int] = None):
+def partial_sieve(limit, primes: list[int]) -> list[int]:
     """Sieve a search space above a known list of primes"""
-    if limit < 2:
-        return []
-    primes = primes or [2]
     biggest_prime = primes[-1]
+    if limit < biggest_prime:
+        return []
     composites = set()
-    if biggest_prime >= limit:
-        return [p for p in primes if p <= limit]
-
+    new_primes = []
     start = biggest_prime + 1 if biggest_prime == 2 else biggest_prime + 2
     print(f"Sieving for primes between {start} and {limit}")
 
@@ -133,8 +136,8 @@ def partial_sieve(limit, primes: list[int] = None):
     for n in range(start, limit + 1, 2):
         if n not in composites:
             composites.update(range(n + n, limit + 1, n))
-            primes.append(n)
-    return primes
+            new_primes.append(n)
+    return new_primes
 
 
 def primes_by_trial_division(limit=math.inf) -> list[int]:
