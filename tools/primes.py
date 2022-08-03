@@ -37,7 +37,7 @@ class Primes:
         if N < cls.all()[-1]:
             return tuple(filter(lambda x: x < N, cls.all()))
         else:
-            return erato_sieve(N)
+            return eratosthenes_sieve(N)
 
     @classmethod
     def first(cls, N):
@@ -110,7 +110,7 @@ def next_prime_by_sieve(primes: list[int]) -> int:
             limit += 100
 
 
-def erato_sieve(limit) -> list[int]:
+def eratosthenes_sieve(limit) -> list[int]:
     if limit < 2:
         return []
     primes = [2]

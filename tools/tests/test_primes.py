@@ -1,7 +1,7 @@
 import pytest
 
 from tools.primes import (
-    erato_sieve,
+    eratosthenes_sieve,
     partial_sieve,
     next_prime_by_trial_division,
     is_prime,
@@ -23,7 +23,7 @@ from tools.primes import (
 @pytest.mark.parametrize(
     "func",
     [
-        erato_sieve,
+        eratosthenes_sieve,
         primes_by_trial_division,
     ],
 )
