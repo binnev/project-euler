@@ -110,16 +110,32 @@ def next_prime_by_sieve(primes: list[int]) -> int:
             limit += 100
 
 
-def eratosthenes_sieve(limit) -> list[int]:
+def eratosthenes_sieve(limit: int) -> list[int]:
     if limit < 2:
         return []
     primes = [2]
     composites = set()
-    for n in range(3, limit, 2):  # consider only odd numbers
+    for n in range(3, limit+1, 2):  # consider only odd numbers
         if n not in composites:
             composites.update(range(n**2, limit, n))
             primes.append(n)
     return primes
+
+
+def sundaram_sieve(limit: int) -> list[int]:
+    k = (limit - 1) // 2
+    square_root = math.sqrt(k)
+    A = [True] * (k + 1)
+    i = 1
+    while i < square_root:
+        j = i
+        while (composite := i + j + 2 * i * j) <= k:
+            A[composite] = False
+            j += 1
+        i += 1
+    T = [index for index, value in enumerate(A) if value is True]
+    T = [2 * t + 1 for t in T]
+    return [2] + T[1:]
 
 
 def partial_sieve(limit, primes: list[int]) -> list[int]:

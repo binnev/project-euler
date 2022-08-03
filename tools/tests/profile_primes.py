@@ -1,10 +1,11 @@
 import time
 
-from tools.primes import eratosthenes_sieve, primes_by_trial_division
+from tools import primes
 
 functions = [
-    eratosthenes_sieve,
-    primes_by_trial_division,
+    primes.eratosthenes_sieve,
+    primes.primes_by_trial_division,
+    primes.sundaram_sieve,
 ]
 limit = 999999
 
