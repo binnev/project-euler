@@ -95,6 +95,8 @@ def next_prime_by_trial_division(N=math.inf) -> list[int]:
 
 
 def sieve_primes(limit) -> list[int]:
+    if limit < 2:
+        return []
     primes = [2]
     composites = set()
     for n in range(3, limit, 2):  # consider only odd numbers
@@ -106,23 +108,27 @@ def sieve_primes(limit) -> list[int]:
 
 def partial_sieve(limit, primes: list[int] = None):
     """Sieve a search space above a known list of primes"""
+    if limit < 2:
+        return []
     primes = primes or [2]
     biggest_prime = primes[-1]
     composites = set()
-    if biggest_prime > limit:
-        raise ValueError("Known primes are larger than the search space")
+    if biggest_prime >= limit:
+        return [p for p in primes if p <= limit]
+
+    start = biggest_prime + 1 if biggest_prime == 2 else biggest_prime + 2
+    print(f"Sieving for primes between {start} and {limit}")
 
     # populate composites from upper edge of known space onwards
     for p in primes:
         remainder = biggest_prime % p
         biggest_multiple = biggest_prime - remainder
-        composites.update(range(biggest_multiple + p, limit, p))
+        composites.update(range(biggest_multiple + p, limit + 1, p))
 
     # search space from upper edge of known space onwards
-    start = biggest_prime + 1 if biggest_prime == 2 else biggest_prime + 2
-    for n in range(start, limit, 2):
+    for n in range(start, limit + 1, 2):
         if n not in composites:
-            composites.update(range(n + n, limit, n))
+            composites.update(range(n + n, limit + 1, n))
             primes.append(n)
     return primes
 
