@@ -37,7 +37,7 @@ class Primes:
         if N < cls.all()[-1]:
             return tuple(filter(lambda x: x < N, cls.all()))
         else:
-            return sieve_primes(N)
+            return erato_sieve(N)
 
     @classmethod
     def first(cls, N):
@@ -99,12 +99,18 @@ def next_prime_by_trial_division(primes: list[int]) -> int:
         n += 2
 
 
-# def next_prime_by_sieve(primes: list[int]) -> int:
-#     biggest_prime = max(primes)
-#     while True:
+def next_prime_by_sieve(primes: list[int]) -> int:
+    biggest_prime = max(primes)
+    limit = biggest_prime + 100
+    while True:
+        new_primes = partial_sieve(limit, primes)
+        if new_primes:
+            return new_primes[0]
+        else:
+            limit += 100
 
 
-def sieve_primes(limit) -> list[int]:
+def erato_sieve(limit) -> list[int]:
     if limit < 2:
         return []
     primes = [2]
@@ -112,6 +118,18 @@ def sieve_primes(limit) -> list[int]:
     for n in range(3, limit, 2):  # consider only odd numbers
         if n not in composites:
             composites.update(range(2 * n, limit, n))
+            primes.append(n)
+    return primes
+
+
+def erato_sieve2(limit) -> list[int]:
+    if limit < 2:
+        return []
+    primes = [2]
+    composites = set()
+    for n in range(3, limit, 2):  # consider only odd numbers
+        if n not in composites:
+            composites.update(range(n**2, limit, n))
             primes.append(n)
     return primes
 
@@ -124,7 +142,6 @@ def partial_sieve(limit, primes: list[int]) -> list[int]:
     composites = set()
     new_primes = []
     start = biggest_prime + 1 if biggest_prime == 2 else biggest_prime + 2
-    print(f"Sieving for primes between {start} and {limit}")
 
     # populate composites from upper edge of known space onwards
     for p in primes:
@@ -140,7 +157,7 @@ def partial_sieve(limit, primes: list[int]) -> list[int]:
     return new_primes
 
 
-def primes_by_trial_division(limit=math.inf) -> list[int]:
+def generate_primes_by_trial_division(limit=math.inf) -> list[int]:
     known_primes = []
 
     def is_prime(n):
@@ -158,3 +175,7 @@ def primes_by_trial_division(limit=math.inf) -> list[int]:
         if is_prime(candidate):
             known_primes.append(candidate)
             yield candidate
+
+
+def primes_by_trial_division(limit: int) -> list[int]:
+    return list(generate_primes_by_trial_division(limit))

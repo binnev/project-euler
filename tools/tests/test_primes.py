@@ -1,11 +1,12 @@
 import pytest
 
 from tools.primes import (
-    sieve_primes,
+    erato_sieve,
     partial_sieve,
     next_prime_by_trial_division,
     is_prime,
     TrialDivisionError,
+    next_prime_by_sieve, erato_sieve2, primes_by_trial_division,
 )
 
 
@@ -16,10 +17,19 @@ from tools.primes import (
         (1, []),
         (2, [2]),
         (20, [2, 3, 5, 7, 11, 13, 17, 19]),
+        (50, [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47])
     ],
 )
-def test_sieve_primes(input, expected_output):
-    assert sieve_primes(input) == expected_output
+@pytest.mark.parametrize(
+    "func",
+    [
+        erato_sieve,
+        erato_sieve2,
+        primes_by_trial_division,
+    ],
+)
+def test_prime_finding_functions(func, input, expected_output):
+    assert func(input) == expected_output
 
 
 @pytest.mark.parametrize(
@@ -48,6 +58,18 @@ def test_partial_sieve(limit, known_primes, expected_result):
 )
 def test_next_prime_by_trial_division(input, expected_output):
     assert next_prime_by_trial_division(input) == expected_output
+
+
+@pytest.mark.parametrize(
+    "input, expected_output",
+    [
+        ([2], 3),
+        ([2, 3], 5),
+        ([2, 3, 5, 7, 11, 13, 17, 19], 23),
+    ],
+)
+def test_next_prime_by_sieve(input, expected_output):
+    assert next_prime_by_sieve(input) == expected_output
 
 
 @pytest.mark.parametrize(
