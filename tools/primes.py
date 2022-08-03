@@ -117,18 +117,6 @@ def erato_sieve(limit) -> list[int]:
     composites = set()
     for n in range(3, limit, 2):  # consider only odd numbers
         if n not in composites:
-            composites.update(range(2 * n, limit, n))
-            primes.append(n)
-    return primes
-
-
-def erato_sieve2(limit) -> list[int]:
-    if limit < 2:
-        return []
-    primes = [2]
-    composites = set()
-    for n in range(3, limit, 2):  # consider only odd numbers
-        if n not in composites:
             composites.update(range(n**2, limit, n))
             primes.append(n)
     return primes

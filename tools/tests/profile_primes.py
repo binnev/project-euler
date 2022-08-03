@@ -1,10 +1,9 @@
 import time
 
-from tools.primes import erato_sieve, erato_sieve2, primes_by_trial_division
+from tools.primes import erato_sieve, primes_by_trial_division
 
 functions = [
     erato_sieve,
-    erato_sieve2,
     primes_by_trial_division,
 ]
 limit = 999999

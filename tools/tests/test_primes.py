@@ -6,7 +6,7 @@ from tools.primes import (
     next_prime_by_trial_division,
     is_prime,
     TrialDivisionError,
-    next_prime_by_sieve, erato_sieve2, primes_by_trial_division,
+    next_prime_by_sieve, primes_by_trial_division,
 )
 
 
@@ -24,7 +24,6 @@ from tools.primes import (
     "func",
     [
         erato_sieve,
-        erato_sieve2,
         primes_by_trial_division,
     ],
 )
