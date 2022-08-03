@@ -2,6 +2,7 @@ import math
 from pathlib import Path
 
 from euler_functions import is_even
+from tools.exceptions import TrialDivisionError
 
 
 class Primes:
@@ -75,9 +76,11 @@ class Primes:
         # return Primes.all()[:end]
 
 
-def is_prime(n):
+def is_prime(n: int, primes: list[int]) -> bool:
     square_root = math.sqrt(n)
-    for p in Primes.all():
+    if primes[-1] < square_root:
+        raise TrialDivisionError(f"Not enough known primes to check if {n} is prime")
+    for p in primes:
         if p > square_root:
             return True
         if n % p == 0:

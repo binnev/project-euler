@@ -1,0 +1,2 @@
+class TrialDivisionError(Exception):
+    pass
