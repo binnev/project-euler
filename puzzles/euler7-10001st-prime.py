@@ -6,6 +6,7 @@ What is the 10001st prime number?
 
 """
 from tools.primes import eratosthenes_sieve
+
 N = 10000
 
 primes = sorted(eratosthenes_sieve(104744))

@@ -151,6 +151,60 @@ def sundaram_sieve(limit: int) -> list[int]:
     return [2] + T[1:]
 
 
+def atkin_sieve(limit: int) -> list[int]:
+    results = [2, 3, 5]
+    sieve_list = [False] * (limit + 1)
+    sq = math.ceil(math.sqrt(limit))
+    for n, _ in enumerate(sieve_list):
+        r = n % 60  # modulo remainder
+        if r in [1, 13, 17, 29, 37, 41, 49, 53]:
+            solutions = [
+                m for x in range(1, sq) for y in range(1, sq) if (m := 4 * x**2 + y**2) <= limit
+            ]
+            for m in solutions:
+                sieve_list[m] = not sieve_list[m]
+
+        if r in [7, 19, 31, 43]:
+            solutions = [
+                m for x in range(1, sq) for y in range(1, sq) if (m := 3 * x**2 + y**2) <= limit
+            ]
+            for m in solutions:
+                sieve_list[m] = not sieve_list[m]
+
+        if r in [11, 23, 47, 59]:
+            solutions = [
+                m
+                for x in range(1, sq)
+                for y in range(1, sq)
+                if x > y and (m := 3 * x**2 - y**2) <= limit
+            ]
+            for m in solutions:
+                sieve_list[m] = not sieve_list[m]
+
+    for n, n_is_prime in enumerate(sieve_list):
+        if n == 1:
+            continue
+        if n_is_prime:
+            results.append(n)
+            n_sq = n**2
+            for mult in range(n_sq, limit, n_sq):
+                # Note that the multiples that can be factored by 2, 3, or 5 need not be marked,
+                # as these will be ignored in the final enumeration of primes.
+                sieve_list[mult] = False
+    return results
+
+    # sq = math.ceil(math.sqrt(limit))
+    # for x in range(1, sq):
+    #     for y in range(1, sq):
+    #         m = 4 * x**2 + y**2
+    #         if (
+    #             m in [1, 13, 17, 29, 37, 41, 49, 53]
+    #             # mod 60 ???
+    #             and m <= limit
+    #         ):
+    #             numbers[m] = not numbers[m]
+
+
 def partial_sieve(limit, primes: list[int]) -> list[int]:
     """Sieve a search space above a known list of primes"""
     biggest_prime = primes[-1]
