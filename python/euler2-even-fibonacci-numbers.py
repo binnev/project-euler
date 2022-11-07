@@ -10,20 +10,28 @@ By starting with 1 and 2, the first 10 terms will be:
 By considering the terms in the Fibonacci sequence whose values do not exceed four
 million, find the sum of the even-valued terms.
 """
+from python.tools import utils
 
 N = 4e6  # max fibonacci term size
 
-a, b = 1, 2  # initial values
-c = 0
 
-even = [b]  # collect the fibonacci terms here
+@utils.profile
+def fibo():
+    a, b = 1, 2  # initial values
+    c = 0
 
-while c <= N:
-    c = a + b
-    a = b
-    b = c
+    even = [b]  # collect the fibonacci terms here
 
-    if c <= N and (c % 2 == 0):
-        even.append(c)
+    while c <= N:
+        c = a + b
+        a = b
+        b = c
 
-print(sum(even))
+        if c <= N and (c % 2 == 0):
+            even.append(c)
+
+    return sum(even)
+
+
+if __name__ == "__main__":
+    assert fibo() == 4613732

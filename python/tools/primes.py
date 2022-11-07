@@ -1,8 +1,7 @@
 import math
 from pathlib import Path
 
-from euler_functions import is_even
-from tools.exceptions import TrialDivisionError
+from python.tools.exceptions import TrialDivisionError
 
 
 class Primes:

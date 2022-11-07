@@ -6,27 +6,39 @@ If we list all the natural numbers below 10 that are multiples of 3 or 5, we get
 
 Find the sum of all the multiples of 3 or 5 below 1000.
 """
+from python.tools import utils
 
 N = 1000
 
-# brute force method: test divisibility of every number
-multiples = []
-for n in range(N):
-    if (n % 3 == 0) or (n % 5 == 0):
-        multiples.append(n)
 
-print(sum(multiples))
-# [Finished in 8.5s] for N = 10000000
+@utils.profile
+def brute():
+    # test divisibility of every number
+    multiples = []
+    for n in range(N):
+        if (n % 3 == 0) or (n % 5 == 0):
+            multiples.append(n)
 
-# one liner
-print(sum(n for n in range(N) if (n % 3 == 0 or n % 5 == 0)))
-# [Finished in 3.9s] for N = 10000000
+    return sum(multiples)
 
-# multiply instead; probably faster than checking
-divisors = 3, 5
-numbers = []
-for d in divisors:
-    numbers += list(range(d, N, d))
 
-print(sum(set(numbers)))
-# [Finished in 2.5s] for N = 10000000
+@utils.profile
+def oneliner():
+    return sum(n for n in range(N) if (n % 3 == 0 or n % 5 == 0))
+
+
+@utils.profile
+def multiply():
+    # multiply instead; probably faster than checking
+    divisors = 3, 5
+    numbers = []
+    for d in divisors:
+        numbers += list(range(d, N, d))
+
+    return sum(set(numbers))
+
+
+if __name__ == "__main__":
+    assert brute() == 233168
+    assert oneliner() == 233168
+    assert multiply() == 233168

@@ -1,6 +1,6 @@
 import time
 
-from tools import primes
+from python.tools import primes
 
 functions = [
     primes.eratosthenes_sieve,
@@ -8,7 +8,7 @@ functions = [
     primes.primes_by_trial_division,
     primes.sundaram_sieve,
 ]
-limit = 2000000
+limit = 2_000_000
 
 
 def profile(func):

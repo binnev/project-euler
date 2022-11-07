@@ -74,8 +74,3 @@ def product(iterable):
     from functools import reduce
 
     return reduce(lambda a, b: a * b, iterable)
-
-
-def profile(string: str):
-    print(("> " + string + " <").center(100, "="))
-    cProfile.run(string, sort="tottime")

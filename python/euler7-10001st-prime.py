@@ -5,9 +5,17 @@ By listing the first six prime numbers: 2, 3, 5, 7, 11, and 13, we can see that 
 What is the 10001st prime number?
 
 """
+from python.tools.utils import profile
 from tools.primes import eratosthenes_sieve
 
-N = 10000
 
-primes = sorted(eratosthenes_sieve(104744))
-print(primes[N])
+@profile
+def euler7():
+    N = 10000
+
+    primes = sorted(eratosthenes_sieve(104744))
+    return primes[N]
+
+
+if __name__ == "__main__":
+    assert euler7() == 104743

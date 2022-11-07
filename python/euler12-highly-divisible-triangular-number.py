@@ -21,6 +21,9 @@ We can see that 28 is the first triangle number to have over five divisors.
 What is the value of the first triangle number to have over five hundred
 divisors?
 """
+import time
+
+from python.tools.utils import profile
 
 
 def prime_factors(number, output="dict"):
@@ -52,9 +55,6 @@ def prime_factors(number, output="dict"):
         return factors
 
 
-# %% brute force -- trial division
-
-
 def nonprime_factors(number):
     factors = set()
     naturals = range(1, number + 1)
@@ -69,34 +69,41 @@ def nonprime_factors(number):
     return factors
 
 
-nonprime_factors(550)
+@profile
+def euler12():
 
-# %%
-start = time.time()
-triangle = 1
-ii = 2
-factors = []
+    nonprime_factors(550)
 
-while len(factors) < 500:
-    factors = nonprime_factors(triangle)
-    #    print("for number ",triangle," there are ",len(factors)," factors")
-    triangle += ii
-    ii += 1
+    # %%
+    start = time.time()
+    triangle = 1
+    ii = 2
+    factors = []
 
-end = time.time()
-print("elapsed time = ", end - start)
-# 76576500 is the number with >500 factors. It is the 12376th triangle number
-# %%
+    while len(factors) < 500:
+        factors = nonprime_factors(triangle)
+        #    print("for number ",triangle," there are ",len(factors)," factors")
+        triangle += ii
+        ii += 1
 
-triangle = 1
+    end = time.time()
+    print("elapsed time = ", end - start)
+    # 76576500 is the number with >500 factors. It is the 12376th triangle number
+    # %%
 
-start = time.time()
+    triangle = 1
 
-for ii in range(12376):
+    start = time.time()
 
-    factors = prime_factors(triangle)
-    #    print("triangle number ",triangle," has ",len(factors)," prime factors")
-    triangle += ii
+    for ii in range(12376):
 
-end = time.time()
-print("elapsed time = ", end - start)
+        factors = prime_factors(triangle)
+        #    print("triangle number ",triangle," has ",len(factors)," prime factors")
+        triangle += ii
+
+    end = time.time()
+    print("elapsed time = ", end - start)
+
+
+if __name__ == "__main__":
+    assert euler12() == 76576500

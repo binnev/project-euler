@@ -1,22 +1,20 @@
 import pytest
 
-from tools.primes import (
-    eratosthenes_sieve,
+from python.tools import primes
+from python.tools.primes import (
     partial_sieve,
     next_prime_by_trial_division,
     is_prime,
     TrialDivisionError,
     next_prime_by_sieve,
-    primes_by_trial_division,
 )
-from tools import primes
 
 
 @pytest.mark.parametrize(
     "input, expected_output",
     [
-        # (2, [2]),
-        # (3, [2, 3]),
+        (2, [2]),
+        (3, [2, 3]),
         (20, [2, 3, 5, 7, 11, 13, 17, 19]),
         (50, [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47]),
     ],
@@ -24,11 +22,11 @@ from tools import primes
 @pytest.mark.parametrize(
     "func",
     [
-        # primes.eratosthenes_sieve,
-        # primes.eratosthenes_sieve2,
-        # primes.primes_by_trial_division,
-        # primes.sundaram_sieve,
-        primes.atkin_sieve,
+        primes.eratosthenes_sieve,
+        primes.eratosthenes_sieve2,
+        primes.primes_by_trial_division,
+        primes.sundaram_sieve,
+        # primes.atkin_sieve,
     ],
 )
 def test_prime_finding_functions(func, input, expected_output):
