@@ -193,17 +193,6 @@ def atkin_sieve(limit: int) -> list[int]:
                 sieve_list[mult] = False
     return results
 
-    # sq = math.ceil(math.sqrt(limit))
-    # for x in range(1, sq):
-    #     for y in range(1, sq):
-    #         m = 4 * x**2 + y**2
-    #         if (
-    #             m in [1, 13, 17, 29, 37, 41, 49, 53]
-    #             # mod 60 ???
-    #             and m <= limit
-    #         ):
-    #             numbers[m] = not numbers[m]
-
 
 def partial_sieve(limit, primes: list[int]) -> list[int]:
     """Sieve a search space above a known list of primes"""
