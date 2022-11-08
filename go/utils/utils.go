@@ -86,3 +86,37 @@ func ReverseString(str string) string {
 	}
 	return string(byte_str)
 }
+
+func MakeRange(start int, stop int) []int {
+	descending := start > stop
+	output := []int{}
+
+	if descending {
+		ii := 0
+		n := start - 1
+		for {
+			if n < stop {
+				break
+			}
+			output = append(output, n)
+			ii++
+			n--
+		}
+	} else {
+		ii := 0
+		n := start
+		for {
+			if n >= stop {
+				break
+			}
+			output = append(output, n)
+			ii++
+			n++
+		}
+	}
+	return output
+}
+
+func PrintAny(thing any) {
+	fmt.Print(thing)
+}
