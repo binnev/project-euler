@@ -9,7 +9,7 @@ What is the largest prime factor of the number 600851475143 ?
 
 # I've written a function to find prime factors. I'll want to reuse this so I've
 # put it in a library
-from euler_functions import prime_factors
+from python.tools.primes import prime_factors
 from python.tools.utils import profile
 
 number = 600851475143

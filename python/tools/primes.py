@@ -260,43 +260,40 @@ def prime_factors(number):
 
     from math import sqrt
 
-    N = number  # remainder of number to be factorised
-    factors = []  # list of factors found so far
-    product = 1  # product of the factors
-    p = 2  # trial number. Skip 1.
+    if number == 0:
+        return dict()
+    remainder = number
+    factors = dict()
+    product = 1
+    p = 2
+    limit = sqrt(number)
 
     # when the product of the factors equals the number itself, we know we've found
-    # all the factors. Until then, keep looping
+    # all the factors.
     while product != number:
-        if p <= sqrt(number):  # search up to the square root of the number
-            while N % p == 0:  # while trial number p divides remainder N evenly
-                factors.append(p)  # add p to list of known factors
-                N = int(N / p)  # divide remainder N by factor p
-                product *= p  # multiply product by factor p
-            p += 1 if p % 2 == 0 else 2  # increment p so as to skip even numbers
-        else:  # if p > sqrt(number)...
-            if N != 1:  # and remainder N is not 1
-                factors.append(N)  # N must be the last prime factor; add to factors
-                product *= N  # update product
-
-    # organise into a dict
-    factors = {key: factors.count(key) for key in set(factors)}
+        if p <= limit:
+            while remainder % p == 0:
+                factors[p] = factors.get(p, 0) + 1
+                remainder = remainder // p
+                product *= p
+            p += 1 if p % 2 == 0 else 2  # skip even numbers
+        else:
+            if remainder != 1:
+                factors[remainder] = factors.get(remainder, 0) + 1
+                product *= remainder
     return factors
 
 
 def nonprime_factors(number):
     """function to return the non-prime factors of a number"""
     factors = set()
-    naturals = range(1, number + 1)  # natural numbers from 1 to the number
-    for n in naturals:  # for each natural number
-        if number % n == 0:  # if n is a divisor of the number
-            # if the divisor and the reciprocal are both already in factors
-            if (n in factors) and (int(number / n) in factors):
-                # stop searching; we've found all the factors
-                break
-            # add the factor and the reciprocal to the list of factors
+    for n in range(1, number + 1):
+        if number % n == 0:
+            reciprocal = number // n
+            if (n in factors) and (reciprocal in factors):
+                break  # stop searching; we've found all the factors
             factors.add(n)
-            factors.add(int(number / n))
+            factors.add(reciprocal)
         if n > number:
             break
     return factors

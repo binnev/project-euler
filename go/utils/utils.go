@@ -41,7 +41,3 @@ func Assert(value string, expected string) {
 		panic(fmt.Sprintf("AssertionError! \n\tgot:\t\t%v \n\texpected:\t%v", value, expected))
 	}
 }
-
-func PrimeFactors(number int) map[int]int {
-	...
-}

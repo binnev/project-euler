@@ -8,6 +8,7 @@ from python.tools.primes import (
     TrialDivisionError,
     next_prime_by_sieve,
     prime_factors,
+    product,
 )
 
 
@@ -106,7 +107,11 @@ def test_is_prime(n, primes, expected_result):
         (8, {2: 3}),
         (24, {2: 3, 3: 1}),
         (25, {5: 2}),
+        (144, {2: 4, 3: 2}),
     ],
 )
 def test_prime_factors(input, expected_output):
-    assert prime_factors(input) == expected_output
+    result = prime_factors(input)
+    assert result == expected_output
+    if result:
+        assert product(factor**power for factor, power in result.items()) == input
