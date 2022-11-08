@@ -16,11 +16,18 @@ What is the millionth lexicographic permutation of the digits
 
 """
 
-import numpy as np, itertools as it
+import itertools as it
 
-numbers = list(range(10))
-p = list(it.permutations(numbers))
+from python.tools.utils import profile
 
-"""
-this was too easy. Next time read about the algorithm a bit more
-"""
+
+@profile
+def euler24():
+    numbers = list(range(10))
+    for ii, perm in enumerate(it.permutations(numbers), start=1):
+        if ii == 1_000_000:
+            return int("".join(map(str, perm)))
+
+
+if __name__ == "__main__":
+    assert euler24() == 2783915460

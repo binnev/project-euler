@@ -13,6 +13,7 @@ numbers and the square of the sum.
 """
 from python.tools.utils import profile
 
+
 @profile
 def euler6():
     N = 100
@@ -23,5 +24,5 @@ def euler6():
     return square_of_sums - sum_of_squares
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     assert euler6() == 25164150

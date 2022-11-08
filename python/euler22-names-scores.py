@@ -16,9 +16,16 @@ obtain a score of 938 × 53 = 49714.
 What is the total of all the name scores in the file?
 
 """
+from python.tools import utils
 
-f = sorted(open("../p022_names.txt").read().replace('"', "").split(","))
-scores = [sum(ord(c) - 64 for c in s) for s in f]
-print(sum([w * p for w, p in zip(scores, range(1, len(f) + 1))]))
 
-# %%
+@utils.profile
+def euler22():
+    raw = utils.load_puzzle_input("euler22")
+    f = sorted(raw.replace('"', "").split(","))
+    scores = [sum(ord(c) - 64 for c in s) for s in f]
+    return sum([w * p for w, p in zip(scores, range(1, len(f) + 1))])
+
+
+if __name__ == "__main__":
+    assert euler22() == 871198282

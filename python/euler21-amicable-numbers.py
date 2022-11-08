@@ -14,10 +14,9 @@ and 142; so d(284) = 220.
 Evaluate the sum of all the amicable numbers under 10000.
 
 """
-from math import sqrt, ceil
-from time import clock
+from math import sqrt
 
-t1 = clock()
+from python.tools.utils import profile
 
 
 def d(N, debug=False):
@@ -40,19 +39,21 @@ def d(N, debug=False):
         return sum(set(divisors))
 
 
-amicable = []
-limit = 10000
-N = 1  # initialise
-while N < limit:
-    if N not in amicable:  # skip numbers already encountered
-        M = d(N)  # find the sum of proper divisors
-        if (M < limit) and (M != N):  # if sum is within limit and != N
-            if d(M) == N:  # if N and M are amicable
-                amicable.extend([N, M])  # ".extend(list)"== "+= list"
-    N += 1
+@profile
+def euler21():
+    amicable = []
+    limit = 10000
+    N = 1  # initialise
+    while N < limit:
+        if N not in amicable:  # skip numbers already encountered
+            M = d(N)  # find the sum of proper divisors
+            if (M < limit) and (M != N):  # if sum is within limit and != N
+                if d(M) == N:  # if N and M are amicable
+                    amicable.extend([N, M])  # ".extend(list)"== "+= list"
+        N += 1
 
-print(sum(amicable))
+    return sum(amicable)
 
-print("time elapsed:", clock() - t1)
 
-#%%
+if __name__ == "__main__":
+    assert euler21() == 31626

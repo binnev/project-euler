@@ -28,15 +28,22 @@ digits?
 
 
 """
+from python.tools.utils import profile
 
 
-a = b = 1
-ii = 2
+@profile
+def euler25():
+    a = b = 1
+    ii = 2
 
-while len(str(b)) < 1e3:
-    c = a + b  # calculate next number before reassignment
-    a = b  # first number steps one
-    b = c  # second number steps one
-    ii += 1
+    while len(str(b)) < 1e3:
+        c = a + b  # calculate next number before reassignment
+        a = b  # first number steps one
+        b = c  # second number steps one
+        ii += 1
 
-print("index =", ii, "number = ", b)
+    return ii
+
+
+if __name__ == "__main__":
+    assert euler25() == 4782

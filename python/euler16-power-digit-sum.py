@@ -7,10 +7,15 @@ Problem 16
 What is the sum of the digits of the number 2^1000?
 
 """
-
-number = str(2**1000)
-number = [int(n) for n in number]
-sum(number)
+from python.tools.utils import profile
 
 
-# easy money
+@profile
+def euler16():
+    number = str(2**1000)
+    number = [int(n) for n in number]
+    return sum(number)
+
+
+if __name__ == "__main__":
+    assert euler16() == 1366

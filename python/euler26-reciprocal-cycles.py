@@ -26,6 +26,8 @@ in its decimal fraction part.
 """
 from math import ceil
 
+from python.tools.utils import profile
+
 
 def repeats(a, d, z=5, limit=1000, confidence=10):
     A = a  # dividend
@@ -36,22 +38,16 @@ def repeats(a, d, z=5, limit=1000, confidence=10):
         digits += str(a // d)  # append the quotient
         a = (10 * a) % d  # find the next decimal by remainder * 10
 
-        #        print("\n")
-        #        print("ii = ",ii)
-        #        print("digits found so far:",digits)
         # make a mask and compare it to the digits found so far#
         for m in range(1, ceil(len(digits) / 2) + 1):
             mask = digits[-m:]
-            #            print("m =",m)
             # if the mask contains only zeroes
             if set(mask) == {"0"}:
                 continue  # ignore it
-            #            print("considering mask:",mask)
 
             # if the mask occurs more than once in the digits then it is repeating
             reps = digits.count(mask)
             if reps > 1:
-                #                print("found repeating mask",mask)
 
                 # the mask length * number of repeats must be > confidence lim.
                 # this is to punish short masks
@@ -62,51 +58,45 @@ def repeats(a, d, z=5, limit=1000, confidence=10):
                 # repeating sequence
                 check = mask * reps  # make a contiguous sequence of mask
                 if check == digits[-len(check) :]:  # check it matches last digits
-                    #                    print("it's a repeating sequence")
                     stop = True
                     break
             else:
-                #                print("no repeats of mask")
                 pass
 
         # stop the loop if z zeroes have been found in a row
         if digits[-z:].count("0") == z:
-            #            print("reached the zero limit ({})".format(z))
             break
 
         ii += 1
         if ii > limit:
-            #            print("found the max number of digits ({})".format(limit))
             break
-
-    if stop is True:
-        #        print("fraction",A,"/",d,"=",digits,"contains repeating pattern",mask,
-        #              "(len={})".format(len(mask)))
-        pass
 
     return mask if stop is True else None
 
 
-top_d, top_mask = None, ""
-N = 1000
-for d in range(1, N):
-    if d % 10 == 0:
-        print(d)
-    mask = repeats(1, d, limit=2000, confidence=5)
-    if mask is None:
-        continue
-    if len(mask) > len(top_mask):
-        top_mask = mask
-        top_d = d
-        print("new top d =", d, "with mask length", len(mask))
+@profile
+def euler26():
+    """
+    this algorithm is REALLY inefficient at the moment. It takes a minute to run.
+    It also seems to get slower as d gets larger. Why is this?
+    Investigate the relationship between d and len(mask). It is always:
+        d = len(mask) + 1
+    """
+    top_d, top_mask = None, ""
+    N = 1000
+    for d in range(1, N):
+        if d % 10 == 0:
+            print(d)
+        mask = repeats(1, d, limit=2000, confidence=5)
+        if mask is None:
+            continue
+        if len(mask) > len(top_mask):
+            top_mask = mask
+            top_d = d
+            print("new top d =", d, "with mask length", len(mask))
+
+    print("top mask =", top_mask, "(len = {})".format(len(top_mask)))
 
 
-print("top mask =", top_mask, "(len = {})".format(len(top_mask)))
-
-"""
-this algorithm is REALLY inefficient at the moment. It takes a minute to run.
-It also seems to get slower as d gets larger. Why is this?
-Investigate the relationship between d and len(mask). It is always:
-    d = len(mask) + 1
-"""
-#%%
+if __name__ == "__main__":
+    assert euler26() == 983

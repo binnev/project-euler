@@ -26,35 +26,6 @@ import time
 from python.tools.utils import profile
 
 
-def prime_factors(number, output="dict"):
-    from math import sqrt
-
-    N = number
-    factors = []
-    product = 1
-    p = 2
-
-    while product != number:  # done
-        if p <= sqrt(number):  # done
-            while N % p == 0:
-                factors.append(p)
-                N = int(N / p)
-                product *= p
-            p += 1 if p % 2 == 0 else 2
-
-        else:  # if p > sqrt(number) -- done
-            if N != 1:  # done
-                factors.append(N)
-                product *= N  # done
-
-    if output == "list":
-        return factors
-    else:
-        # organise into a dict
-        factors = {key: factors.count(key) for key in set(factors)}
-        return factors
-
-
 def nonprime_factors(number):
     factors = set()
     naturals = range(1, number + 1)
@@ -71,10 +42,6 @@ def nonprime_factors(number):
 
 @profile
 def euler12():
-
-    nonprime_factors(550)
-
-    # %%
     start = time.time()
     triangle = 1
     ii = 2
@@ -82,24 +49,10 @@ def euler12():
 
     while len(factors) < 500:
         factors = nonprime_factors(triangle)
-        #    print("for number ",triangle," there are ",len(factors)," factors")
+        if len(factors) > 500:
+            return triangle
         triangle += ii
         ii += 1
-
-    end = time.time()
-    print("elapsed time = ", end - start)
-    # 76576500 is the number with >500 factors. It is the 12376th triangle number
-    # %%
-
-    triangle = 1
-
-    start = time.time()
-
-    for ii in range(12376):
-
-        factors = prime_factors(triangle)
-        #    print("triangle number ",triangle," has ",len(factors)," prime factors")
-        triangle += ii
 
     end = time.time()
     print("elapsed time = ", end - start)

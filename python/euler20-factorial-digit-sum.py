@@ -10,6 +10,13 @@ Find the sum of the digits in the number 100!
 
 from math import factorial
 
-print(sum([int(n) for n in str(factorial(100))]))
+from python.tools.utils import profile
 
-# EASY MONEY
+
+@profile
+def easy_money():
+    return sum([int(n) for n in str(factorial(100))])
+
+
+if __name__ == "__main__":
+    assert easy_money() == 648

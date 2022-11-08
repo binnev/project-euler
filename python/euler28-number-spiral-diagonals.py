@@ -17,20 +17,28 @@ What is the sum of the numbers on the diagonals in a 1001 by 1001 spiral formed
 in the same way?
 
 """
+from python.tools.utils import profile
 
-#%% easy peasy with m
 
-N = 1001  # size of the spiral. Must be odd.
-diag = 0
-for n in range(1, N + 1, 2):
-    if n == 1:
-        diag += 1
-        continue
-    # sum of the corner values
-    diag += sum(n**2 - (n - 1) * i for i in range(4))
+@profile
+def easy_peasy():
+    N = 1001  # size of the spiral. Must be odd.
+    diag = 0
+    for n in range(1, N + 1, 2):
+        if n == 1:
+            diag += 1
+            continue
+        # sum of the corner values
+        diag += sum(n**2 - (n - 1) * i for i in range(4))
 
-print(diag)
+    return diag
 
-# %% can I do it descending from N to 0 and in a one liner
 
-sum(sum(n**2 - (n - 1) * i for i in range(4)) for n in range(1001, 1, -2)) + 1
+@profile
+def oneliner():
+    return sum(sum(n**2 - (n - 1) * i for i in range(4)) for n in range(1001, 1, -2)) + 1
+
+
+if __name__ == "__main__":
+    assert easy_peasy() == 669171001
+    assert oneliner() == 669171001

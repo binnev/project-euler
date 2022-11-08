@@ -36,7 +36,6 @@ number = utils.load_puzzle_input("euler8")
 number = [int(n) for n in number.strip().replace("\n", "")]
 
 
-
 @utils.profile
 def euler8():
     length = 13

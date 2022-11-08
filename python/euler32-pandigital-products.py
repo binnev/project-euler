@@ -18,10 +18,10 @@ include it once in your sum.
 
 """
 
-import numpy as np, itertools as it
-from math import floor, ceil
-from time import clock
-import matplotlib.pyplot as plt
+import itertools as it
+from math import floor
+
+from python.tools.utils import profile
 
 """ considering multiplication A * B = C, with len(A) = a, etc. 
 The total number of digits must add up to N. 
@@ -37,7 +37,7 @@ Not a valid answer, but the sum of digits is correct.
 """
 
 
-def is_pandigital(ABC):
+def is_pandigital(ABC, digits):
     # function to check if a number is pandigital
     if "0" in ABC:
         return False
@@ -56,50 +56,48 @@ def is_pandigital(ABC):
     return True
 
 
-N = 9  # number of total digits
-digits = set(str(i) for i in range(1, N + 1))
-calculations = 0
-pan = set()
-products = set()
-combos = list()
-t1 = clock()
+@profile
+def euler32():
+    N = 9  # number of total digits
+    digits = set(str(i) for i in range(1, N + 1))
+    calculations = 0
+    pan = set()
+    products = set()
+    combos = list()
 
-for a in range(1, floor(N / 2) + 1):
+    for a in range(1, floor(N / 2) + 1):
 
-    for A in it.permutations(digits, a):  # a-digit permutations of A
+        for A in it.permutations(digits, a):  # a-digit permutations of A
 
-        # subtract A digits to find remaining digits available for B
-        bs = digits.difference(A)
-        # construct integer a
-        A = "".join(A)  # construct A
-        if A == "1":
-            continue
+            # subtract A digits to find remaining digits available for B
+            bs = digits.difference(A)
+            # construct integer a
+            A = "".join(A)  # construct A
+            if A == "1":
+                continue
 
-        for b in range(1, floor(N / 2) + 1):
+            for b in range(1, floor(N / 2) + 1):
 
-            # find b-digit permutations of remaining digits
-            for B in it.permutations(bs, b):
-                B = "".join(B)  # construct B
-                if B == "1":
-                    continue
+                # find b-digit permutations of remaining digits
+                for B in it.permutations(bs, b):
+                    B = "".join(B)  # construct B
+                    if B == "1":
+                        continue
 
-                C = str(int(A) * int(B))
-                calculations += 1
+                    C = str(int(A) * int(B))
+                    calculations += 1
 
-                ABC = A + B + C
+                    ABC = A + B + C
 
-                if not is_pandigital(ABC):
-                    continue
+                    if not is_pandigital(ABC, digits):
+                        continue
 
-                pan.add(ABC)
-                products.add(C)
-                combos.append((A, B))
+                    pan.add(ABC)
+                    products.add(C)
+                    combos.append((A, B))
 
-# prune the list to allow only N-length pandigitals
-pan = {p for p in pan if len(p) == N}
-t2 = clock()
-print(calculations, "calculations performed")
-print(len(pan), "{}-length pandigital products found:".format(N), pan)
-print("time taken =", t2 - t1)
+    return sum(int(p) for p in products)
 
-print("answer =", sum(int(p) for p in products))
+
+if __name__ == "__main__":
+    assert euler32() == 45228

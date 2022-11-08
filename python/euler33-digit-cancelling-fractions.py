@@ -18,49 +18,59 @@ find the value of the denominator.
 """
 import itertools as it
 
-# find all the possible 2-digit numbers we can use as numerator/denominator
-numbers = [str(i) for i in range(10, 100)]
+from python.tools.utils import profile
 
-# find all the ways in which we can pair up these numbers.
-pairs = list(it.combinations(numbers, 2))
 
-digits = "123456789"
-solutions = set()
+@profile
+def euler33():
+    # find all the possible 2-digit numbers we can use as numerator/denominator
+    numbers = [str(i) for i in range(10, 100)]
 
-for a, b in pairs:
+    # find all the ways in which we can pair up these numbers.
+    pairs = list(it.combinations(numbers, 2))
 
-    # check for shared digits
-    shared_digits = []
-    for d in digits:
-        if (d in a) and (d in b):
-            shared_digits.append(d)
+    digits = "123456789"
+    solutions = set()
 
-    if not shared_digits:
-        continue  # if we can't cancel; skip to next a, b pair
+    for a, b in pairs:
 
-    # cancel out the shared digits
-    # only cancel one digit each time. Repeat for multiple digits
-    for d in shared_digits:
-        a_new, b_new = a, b
-        a_new = a_new.replace(d, "", 1)
-        b_new = b_new.replace(d, "", 1)
+        # check for shared digits
+        shared_digits = []
+        for d in digits:
+            if (d in a) and (d in b):
+                shared_digits.append(d)
 
-        # catch any zeros
-        if "0" in (a_new, b_new):
-            continue
+        if not shared_digits:
+            continue  # if we can't cancel; skip to next a, b pair
 
-        # evaluate the fractions
-        frac = int(a) / int(b)
-        frac_new = int(a_new) / int(b_new)
-        if frac == frac_new:
-            solutions.add((int(a), int(b)))
+        # cancel out the shared digits
+        # only cancel one digit each time. Repeat for multiple digits
+        for d in shared_digits:
+            a_new, b_new = a, b
+            a_new = a_new.replace(d, "", 1)
+            b_new = b_new.replace(d, "", 1)
 
-print("found", len(solutions), "solutions:", solutions)
+            # catch any zeros
+            if "0" in (a_new, b_new):
+                continue
 
-numerator = 1
-denominator = 1
-for a, b in solutions:
-    numerator *= a
-    denominator *= b
+            # evaluate the fractions
+            frac = int(a) / int(b)
+            frac_new = int(a_new) / int(b_new)
+            if frac == frac_new:
+                solutions.add((int(a), int(b)))
 
-# %%
+    print("found", len(solutions), "solutions:", solutions)
+
+    numerator = 1
+    denominator = 1
+    for a, b in solutions:
+        numerator *= a
+        denominator *= b
+
+    print(f"{numerator}")
+    print(f"{denominator}")
+
+
+if __name__ == "__main__":
+    assert euler33() == 40730
