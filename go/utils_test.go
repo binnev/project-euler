@@ -55,3 +55,30 @@ func TestPrimeFactors(t *testing.T) {
 		})
 	}
 }
+func TestReverseString(t *testing.T) {
+	cases := []struct {
+		input    string
+		expected string
+	}{
+		{"", ""},
+		{"a", "a"},
+		{"ab", "ba"},
+		{"abba", "abba"},
+		{"tacocat", "tacocat"},
+		{"Robin", "niboR"},
+		{"Hello!", "!olleH"},
+	}
+
+	for _, tc := range cases {
+		t.Run(tc.input, func(t *testing.T) {
+			result := utils.ReverseString(tc.input)
+			if result != tc.expected {
+				t.Fatalf(
+					"%v failed; got %v; expected %v",
+					tc.input,
+					result, tc.expected,
+				)
+			}
+		})
+	}
+}
