@@ -7,6 +7,7 @@ from python.tools.primes import (
     is_prime,
     TrialDivisionError,
     next_prime_by_sieve,
+    prime_factors,
 )
 
 
@@ -91,3 +92,21 @@ def test_is_prime(n, primes, expected_result):
             is_prime(n, primes)
     else:
         assert is_prime(n, primes) == expected_result
+
+
+@pytest.mark.parametrize(
+    "input, expected_output",
+    [
+        (0, {}),
+        (1, {}),
+        (2, {2: 1}),
+        (4, {2: 2}),
+        (6, {2: 1, 3: 1}),
+        (7, {7: 1}),
+        (8, {2: 3}),
+        (24, {2: 3, 3: 1}),
+        (25, {5: 2}),
+    ],
+)
+def test_prime_factors(input, expected_output):
+    assert prime_factors(input) == expected_output
