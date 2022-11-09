@@ -91,8 +91,8 @@ func MakeRange(start int, stop int) []int {
 	descending := start > stop
 	output := []int{}
 
+	ii := 0
 	if descending {
-		ii := 0
 		n := start - 1
 		for {
 			if n < stop {
@@ -103,7 +103,6 @@ func MakeRange(start int, stop int) []int {
 			n--
 		}
 	} else {
-		ii := 0
 		n := start
 		for {
 			if n >= stop {
@@ -117,6 +116,7 @@ func MakeRange(start int, stop int) []int {
 	return output
 }
 
-func PrintAny(thing any) {
-	fmt.Print(thing)
+func PrintAny(thing ...any) {
+	// so this IS possible!
+	fmt.Println(thing...)
 }

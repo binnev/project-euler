@@ -118,4 +118,5 @@ func TestPrintAny(t *testing.T) {
 	utils.PrintAny("foo")
 	utils.PrintAny(1)
 	utils.PrintAny([]int{1, 2, 3})
+	utils.PrintAny()
 }
