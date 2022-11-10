@@ -7,7 +7,7 @@ import (
 
 func main() {
 	utils.Assert(
-		utils.Profile(puzzles.Euler9),
-		"31875000",
+		utils.Profile(puzzles.Euler10),
+		"142913828922",
 	)
 }
