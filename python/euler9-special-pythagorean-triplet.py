@@ -14,7 +14,7 @@ from python.tools.utils import profile
 
 
 @profile
-def euler9():
+def euler9plots():
     triples = {}
 
     for circumference in range(1, 2000):
@@ -42,6 +42,16 @@ def euler9():
         plt.plot(aa, bb, "-o", c=cm(circumference / max(triples)), mew=0)
 
     plt.show()
+
+
+@profile
+def euler9():
+    N = 1000
+    for a in range(1, N):
+        for b in range(1, N - a):
+            c = N - a - b
+            if a**2 + b**2 == c**2:
+                return a * b * c
 
 
 if __name__ == "__main__":
