@@ -8,8 +8,7 @@ without any remainder.
 What is the smallest positive number that is evenly divisible by all of the numbers
 from 1 to 20?
 """
-
-from euler_functions import prime_factors, product
+from python.tools.primes import prime_factors, product
 from python.tools.utils import profile
 
 
