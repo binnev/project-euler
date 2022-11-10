@@ -13,7 +13,7 @@ from tools.primes import eratosthenes_sieve
 def euler7():
     N = 10000
 
-    primes = sorted(eratosthenes_sieve(104744))
+    primes = sorted(eratosthenes_sieve(150000))
     return primes[N]
 
 

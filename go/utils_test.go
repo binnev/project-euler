@@ -147,3 +147,31 @@ func TestIntPow(t *testing.T) {
 		})
 	}
 }
+
+func TestSievePrimes(t *testing.T) {
+
+	cases := []struct {
+		limit    int
+		expected []int
+	}{
+		{2, []int{2}},
+		{3, []int{2, 3}},
+		{20, []int{2, 3, 5, 7, 11, 13, 17, 19}},
+		{50, []int{2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47}},
+	}
+
+	for _, tc := range cases {
+		name := fmt.Sprint(tc.limit)
+		t.Run(name, func(t *testing.T) {
+			result := utils.SievePrimes(tc.limit)
+			if !reflect.DeepEqual(result, tc.expected) {
+				t.Fatalf(
+					"%v failed; got %v; expected %v",
+					name,
+					result,
+					tc.expected,
+				)
+			}
+		})
+	}
+}

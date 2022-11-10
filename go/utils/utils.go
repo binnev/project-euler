@@ -160,3 +160,39 @@ func DetectType(x any) string {
 		return "dunno!"
 	}
 }
+
+// Eratosthenes' Sieve
+func SievePrimes(limit int) []int {
+	if limit < 2 {
+		return []int{}
+	}
+	primes := []int{2}
+	composites := map[int]bool{}
+	for n := 3; n < limit+1; n += 2 {
+		if !composites[n] {
+			primes = append(primes, n)
+			for c := IntPow(n, 2); c < limit; c += n {
+				composites[c] = true
+			}
+		}
+	}
+	return primes
+}
+
+func MaxInt(numbers []int) int {
+	biggest := 0
+	for _, value := range numbers {
+		if value > biggest {
+			biggest = value
+		}
+	}
+	return biggest
+}
+
+func ProductInt(numbers []int) int {
+	prod := 1
+	for _, value := range numbers {
+		prod *= value
+	}
+	return prod
+}
