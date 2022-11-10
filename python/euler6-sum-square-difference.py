@@ -13,7 +13,6 @@ numbers and the square of the sum.
 """
 from python.tools.utils import profile
 
-
 @profile
 def euler6():
     N = 100

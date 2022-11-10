@@ -113,10 +113,37 @@ func TestMakeRange(t *testing.T) {
 		})
 	}
 }
+func TestIntPow(t *testing.T) {
+	cases := []struct {
+		number   int
+		exponent int
+		expected int
+	}{
+		{0, 0, 1},
+		{1, 1, 1},
+		{0, 1, 0},
+		{0, 2, 0},
+		{0, 5, 0},
+		{1, 2, 1},
+		{2, 2, 4},
+		{2, 3, 8},
+		{8, 2, 64},
+		{-1, 2, 1},
+		{12, 2, 144},
+	}
 
-func TestPrintAny(t *testing.T) {
-	utils.PrintAny("foo")
-	utils.PrintAny(1)
-	utils.PrintAny([]int{1, 2, 3})
-	utils.PrintAny()
+	for _, tc := range cases {
+		name := fmt.Sprint(tc.number, tc.exponent)
+		t.Run(name, func(t *testing.T) {
+			result := utils.IntPow(tc.number, tc.exponent)
+			if result != tc.expected {
+				t.Fatalf(
+					"%v failed; got %v; expected %v",
+					name,
+					result,
+					tc.expected,
+				)
+			}
+		})
+	}
 }

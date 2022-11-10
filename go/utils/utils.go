@@ -116,7 +116,47 @@ func MakeRange(start int, stop int) []int {
 	return output
 }
 
+func IntPow(number int, exponent int) int {
+	return int(math.Pow(
+		float64(number),
+		float64(exponent),
+	))
+}
+
+func Sum(iterable []int) int {
+	total := 0
+	for _, value := range iterable {
+		total += value
+	}
+	return total
+}
+
+func Map(f func(int) int, iterable []int) []int {
+	output := make([]int, len(iterable))
+	for ii, value := range iterable {
+		output[ii] = f(value)
+	}
+	return output
+}
+
 func PrintAny(thing ...any) {
 	// so this IS possible!
 	fmt.Println(thing...)
+}
+
+func PrintType(x any) {
+	fmt.Println(reflect.TypeOf(x).String())
+}
+
+func DetectType(x any) string {
+	switch x.(type) {
+	case string:
+		return "string!"
+	case int:
+		return "int!"
+	case float64:
+		return "float64!"
+	default:
+		return "dunno!"
+	}
 }
