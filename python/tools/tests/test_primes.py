@@ -137,11 +137,3 @@ def test_prime_factors(input, expected_output):
 @pytest.mark.parametrize("func", [nonprime_factors, better_nonprime_factors])
 def test_nonprime_factors(func, input, expected_output):
     assert func(input) == expected_output
-
-
-def test_profile_nonprime_factors():
-    N = 98765432112431
-    with profile_context():
-        nonprime_factors(N)
-    with profile_context():
-        better_nonprime_factors(N)

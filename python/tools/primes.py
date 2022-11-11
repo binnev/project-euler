@@ -309,14 +309,12 @@ def better_nonprime_factors(N: int) -> set[int]:
     if N == 1:
         return {1}
     pf = prime_factors(N)
-    divisors = set()
     factors = pf.keys()
     powers = pf.values()
-    for combinations in itertools.product(*(range(pow + 1) for pow in powers)):
-        divisor = product(f**p for f, p in zip(factors, combinations))
-        divisors.add(divisor)
-
-    return divisors
+    return {
+        product(f**p for f, p in zip(factors, combos))
+        for combos in itertools.product(*(range(pow + 1) for pow in powers))
+    }
 
 
 def product(iterable):
