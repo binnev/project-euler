@@ -1,3 +1,4 @@
+import itertools
 import math
 from pathlib import Path
 
@@ -134,6 +135,9 @@ def eratosthenes_sieve2(limit: int) -> list[int]:
     return primes
 
 
+sieve_primes = eratosthenes_sieve2
+
+
 def sundaram_sieve(limit: int) -> list[int]:
     k = (limit - 1) // 2
     square_root = math.sqrt(k)
@@ -244,7 +248,7 @@ def is_even(n: int) -> bool:
     return n % 2 == 0
 
 
-def prime_factors(number):
+def prime_factors(number) -> dict[int:int]:
     """function to find the prime factors of a number by (modified) trial division.
 
     By default, the factors will be returned in dict format: {factor: exponent}:
@@ -284,7 +288,7 @@ def prime_factors(number):
     return factors
 
 
-def nonprime_factors(number):
+def nonprime_factors(number: int) -> set[int]:
     """function to return the non-prime factors of a number"""
     factors = set()
     for n in range(1, number + 1):
@@ -299,7 +303,23 @@ def nonprime_factors(number):
     return factors
 
 
+def better_nonprime_factors(N: int) -> set[int]:
+    if N == 0:
+        return set()
+    if N == 1:
+        return {1}
+    pf = prime_factors(N)
+    divisors = set()
+    factors = pf.keys()
+    powers = pf.values()
+    for combinations in itertools.product(*(range(pow + 1) for pow in powers)):
+        divisor = product(f**p for f, p in zip(factors, combinations))
+        divisors.add(divisor)
+
+    return divisors
+
+
 def product(iterable):
     from functools import reduce
 
-    return reduce(lambda a, b: a * b, iterable)
+    return reduce(lambda a, b: a * b, iterable, 1)

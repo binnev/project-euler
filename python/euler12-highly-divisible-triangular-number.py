@@ -21,28 +21,13 @@ We can see that 28 is the first triangle number to have over five divisors.
 What is the value of the first triangle number to have over five hundred
 divisors?
 """
-import time
 
+from python.tools.primes import nonprime_factors, prime_factors, product, better_nonprime_factors
 from python.tools.utils import profile
 
 
-def nonprime_factors(number):
-    factors = set()
-    naturals = range(1, number + 1)
-    for n in naturals:
-        if number % n == 0:
-            if (n in factors) and (int(number / n) in factors):
-                break
-            factors.add(n)
-            factors.add(int(number / n))
-        if n > number:
-            break
-    return factors
-
-
 @profile
-def euler12():
-    start = time.time()
+def euler12old():
     triangle = 1
     ii = 2
     factors = []
@@ -54,9 +39,36 @@ def euler12():
         triangle += ii
         ii += 1
 
-    end = time.time()
-    print("elapsed time = ", end - start)
+
+def num_divisors(N):
+    """
+    for N = 28:
+            prime factors
+            2   7
+            exponents
+    1   =   0   0   (2**0 * 7**0)
+    2   =   1   0
+    4   =   2   0
+    7   =   0   1
+    14  =   1   1
+    28  =   2   1
+
+    The number of divisors = the product of the prime factors' max powers = 6 ((2+1) * (1+1))
+    """
+    return product(power + 1 for power in prime_factors(N).values())
+
+
+@profile
+def euler12better():
+    triangle = 1
+    ii = 2
+    while True:
+        if num_divisors(triangle) > 500:
+            return triangle
+        triangle += ii
+        ii += 1
 
 
 if __name__ == "__main__":
-    assert euler12() == 76576500
+    assert euler12old() == 76576500
+    assert euler12better() == 76576500

@@ -9,7 +9,10 @@ from python.tools.primes import (
     next_prime_by_sieve,
     prime_factors,
     product,
+    nonprime_factors,
+    better_nonprime_factors,
 )
+from python.tools.utils import profile_context
 
 
 @pytest.mark.parametrize(
@@ -108,6 +111,7 @@ def test_is_prime(n, primes, expected_result):
         (24, {2: 3, 3: 1}),
         (25, {5: 2}),
         (144, {2: 4, 3: 2}),
+        (43, {43: 1}),
     ],
 )
 def test_prime_factors(input, expected_output):
@@ -115,3 +119,29 @@ def test_prime_factors(input, expected_output):
     assert result == expected_output
     if result:
         assert product(factor**power for factor, power in result.items()) == input
+
+
+@pytest.mark.parametrize(
+    "input, expected_output",
+    [
+        (0, set()),
+        (1, {1}),
+        (2, {1, 2}),
+        (10, {1, 2, 5, 10}),
+        (20, {1, 2, 4, 5, 10, 20}),
+        (27, {1, 3, 9, 27}),
+        (50, {1, 2, 5, 10, 25, 50}),
+        (43, {1, 43}),
+    ],
+)
+@pytest.mark.parametrize("func", [nonprime_factors, better_nonprime_factors])
+def test_nonprime_factors(func, input, expected_output):
+    assert func(input) == expected_output
+
+
+def test_profile_nonprime_factors():
+    N = 98765432112431
+    with profile_context():
+        nonprime_factors(N)
+    with profile_context():
+        better_nonprime_factors(N)
