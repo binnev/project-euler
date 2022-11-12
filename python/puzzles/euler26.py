@@ -29,20 +29,6 @@ from math import ceil
 from python.tools import profile
 
 
-def gen_decimals(d: int, limit=100) -> (list[int], list[int]):
-    """
-    Keep yielding decimal digits until we hit the limit
-    """
-    remainder = 1
-    ii = 0
-    while True:
-        div, remainder = divmod(remainder * 10, d)
-        yield div
-        if not remainder or ii == limit:
-            return
-        ii += 1
-
-
 def find_longest_substring(input: list[int]) -> list[int]:
     """
     Now we just need to make it dynamic; have a for loop iterating over the digit generator,
@@ -75,32 +61,41 @@ def find_longest_substring(input: list[int]) -> list[int]:
     return []
 
 
-def get_decimals(d: int) -> (list[int], list[int]):
+def decimals(d: int) -> (list[int], list[int]):
+    """
+    Keep yielding decimal digits
+    """
+    remainder = 1
+    ii = 0
+    while True:
+        div, remainder = divmod(remainder * 10, d)
+        yield div, remainder
+        if not remainder:
+            return
+        ii += 1
+
+
+def fixed_repeating_parts(d: int) -> (list[int], list[int]):
     """
     Generate the fixed and repeating parts of the decimal
     """
     digits = []
     remainders = []
-    rem = 1
-    ii = 0
-    while True:
-        dig, rem = divmod(rem * 10, d)
+    for dig, rem in decimals(d):
         digits.append(dig)
-        if not rem:
-            fixed = digits
-            repeating = []
-            break
+
+        # if we have seen the remainder before, it means we have encountered a loop in the
+        # decimals. If we are dividing 1/7 and the remainder at some stage is 2, the next digit
+        # is always going to be the same, and so will the following digits!
         if rem in remainders:
             ind = remainders.index(rem)
             fixed = digits[:ind]
             repeating = digits[ind:]
-            break
+            return fixed, repeating
         if dig:
             remainders.append(rem)
 
-        ii += 1
-
-    return fixed, repeating
+    return digits, []
 
 
 @profile.function
@@ -109,7 +104,7 @@ def euler26():
     max_d = 0
     max_repeats = 0
     for d in range(2, N):
-        fixed, repeating = get_decimals(d)
+        fixed, repeating = fixed_repeating_parts(d)
         repeats = len(repeating)
         if repeats > max_repeats:
             max_repeats = repeats
