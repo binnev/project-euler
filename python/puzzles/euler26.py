@@ -29,73 +29,92 @@ from math import ceil
 from python.tools import profile
 
 
-def repeats(a, d, z=5, limit=1000, confidence=10):
-    A = a  # dividend
-    digits = ""
+def gen_decimals(d: int, limit=100) -> (list[int], list[int]):
+    """
+    Keep yielding decimal digits until we hit the limit
+    """
+    remainder = 1
     ii = 0
-    stop = False
-    while stop is False:
-        digits += str(a // d)  # append the quotient
-        a = (10 * a) % d  # find the next decimal by remainder * 10
+    while True:
+        div, remainder = divmod(remainder * 10, d)
+        yield div
+        if not remainder or ii == limit:
+            return
+        ii += 1
 
-        # make a mask and compare it to the digits found so far#
-        for m in range(1, ceil(len(digits) / 2) + 1):
-            mask = digits[-m:]
-            # if the mask contains only zeroes
-            if set(mask) == {"0"}:
-                continue  # ignore it
 
-            # if the mask occurs more than once in the digits then it is repeating
-            reps = digits.count(mask)
-            if reps > 1:
+def find_longest_substring(input: list[int]) -> list[int]:
+    """
+    Now we just need to make it dynamic; have a for loop iterating over the digit generator,
+    and every iteration, do a form of this mask check.
+    something like:
+    input = []
+    for digit in generate():
+        if digit == 0 and not input:
+            continue
+        input.append(digit)
+        if find_longest(input):
+            return it
 
-                # the mask length * number of repeats must be > confidence lim.
-                # this is to punish short masks
-                if reps * len(mask) < confidence:
-                    continue
+    :param input:
+    :return:
+    """
+    input = "".join(map(str, input))
+    input = input.lstrip("0")  # ignore leading zeros
+    input = list(map(int, input))
 
-                # if the repeated occurrences are *contiguous* then we have a
-                # repeating sequence
-                check = mask * reps  # make a contiguous sequence of mask
-                if check == digits[-len(check) :]:  # check it matches last digits
-                    stop = True
-                    break
-            else:
-                pass
+    match_length = 5
+    for mask_length in range(1, 20):
+        mask = input[:mask_length]
+        repeated_mask = mask[::]
+        while len(repeated_mask) < match_length:
+            repeated_mask += mask
 
-        # stop the loop if z zeroes have been found in a row
-        if digits[-z:].count("0") == z:
+        if repeated_mask == input[: len(repeated_mask)]:
+            return mask
+    return []
+
+
+def get_decimals(d: int) -> (list[int], list[int]):
+    """
+    Generate the fixed and repeating parts of the decimal
+    """
+    digits = []
+    remainders = []
+    rem = 1
+    ii = 0
+    while True:
+        dig, rem = divmod(rem * 10, d)
+        digits.append(dig)
+        if not rem:
+            fixed = digits
+            repeating = []
             break
+        if rem in remainders:
+            ind = remainders.index(rem)
+            fixed = digits[:ind]
+            repeating = digits[ind:]
+            break
+        if dig:
+            remainders.append(rem)
 
         ii += 1
-        if ii > limit:
-            break
 
-    return mask if stop is True else None
+    return fixed, repeating
 
 
 @profile.function
 def euler26():
-    """
-    this algorithm is REALLY inefficient at the moment. It takes a minute to run.
-    It also seems to get slower as d gets larger. Why is this?
-    Investigate the relationship between d and len(mask). It is always:
-        d = len(mask) + 1
-    """
-    top_d, top_mask = None, ""
     N = 1000
-    for d in range(1, N):
-        if d % 10 == 0:
-            print(d)
-        mask = repeats(1, d, limit=2000, confidence=5)
-        if mask is None:
-            continue
-        if len(mask) > len(top_mask):
-            top_mask = mask
-            top_d = d
-            print("new top d =", d, "with mask length", len(mask))
-
-    print("top mask =", top_mask, "(len = {})".format(len(top_mask)))
+    max_d = 0
+    max_repeats = 0
+    for d in range(2, N):
+        fixed, repeating = get_decimals(d)
+        repeats = len(repeating)
+        if repeats > max_repeats:
+            max_repeats = repeats
+            max_d = d
+    return max_d
 
 
 if __name__ == "__main__":
