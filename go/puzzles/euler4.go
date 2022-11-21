@@ -69,7 +69,6 @@ func euler4Elegant() string {
 			max = p
 		}
 	}
-	fmt.Println(palindromes)
 	return fmt.Sprint(max)
 }
 
