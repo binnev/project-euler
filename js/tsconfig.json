@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+  },
+  "include": [
+    "puzzles/",
+    "tests/"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
+  "compileOnSave": false
+}

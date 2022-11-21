@@ -27,7 +27,7 @@ def euler2():
         a = b
         b = c
 
-        if c <= N and (c % 2 == 0):
+        if c % 2 == 0:
             even.append(c)
 
     return sum(even)
