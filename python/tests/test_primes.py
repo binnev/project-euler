@@ -12,7 +12,6 @@ from python.tools.primes import (
     nonprime_factors,
     better_nonprime_factors,
 )
-from python.tools import profile_context
 
 
 @pytest.mark.parametrize(

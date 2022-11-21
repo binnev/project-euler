@@ -11,7 +11,8 @@ What is the largest n-digit pandigital prime that exists?
 
 from itertools import combinations, permutations
 import sys
-if __name__ == '__main__':
+
+if __name__ == "__main__":
 
     codePath = r"C:\gdrive\code\python"
     if codePath not in sys.path:

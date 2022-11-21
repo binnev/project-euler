@@ -10,7 +10,7 @@ If p is the perimeter of a right angle triangle with integral length sides,
 For which value of p ≤ 1000, is the number of solutions maximised?
 
 """
-if __name__ == '__main__':
+if __name__ == "__main__":
 
     # grind out the pythagorean triples with circumference <= 1000
     triples = {}

@@ -29,7 +29,7 @@ starting with n=0.
 """
 from python.tools.primes import sieve_primes
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 
     primes = sieve_primes(100000)  # sieve the primes
     max_primes = max(primes)  # evaluate this once instead of on the fly each time
@@ -39,14 +39,12 @@ if __name__ == '__main__':
     n_max = 0
     a_crit, b_crit = None, None
 
-
     def is_prime(n):
         if n < 0:  # mod(n)
             n = -n
         if n > max_primes:
             raise Exception("we've run outta primes")
         return n in primes
-
 
     # for -1000 < a < 1000
     for a in a_range:

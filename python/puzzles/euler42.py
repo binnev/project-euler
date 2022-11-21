@@ -19,7 +19,7 @@ triangle words?
 """
 import string
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 
     # extract words from txt file
     words = open("../p042_words.txt").read().replace('"', "").split(",")
@@ -29,11 +29,9 @@ if __name__ == '__main__':
     def score(word):
         return sum(letters.index(l) + 1 for l in word)
 
-
     # define function for triangle numbers
     def triangle(n):
         return int(0.5 * n * (n + 1))
-
 
     # now compute the triangle numbers
     triangles = [triangle(ii) for ii in range(1, 50)]

@@ -15,7 +15,8 @@ How many circular primes are there below one million?
 """
 
 import sys
-if __name__ == '__main__':
+
+if __name__ == "__main__":
 
     codePath = "C:/gdrive/code/python"
     if codePath not in sys.path:

@@ -33,7 +33,8 @@ def baseTenTo(n10, base=10):
 def toBinary(n10):
     return "{:b}".format(n10)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
 
     winners = []
     t1 = clock()

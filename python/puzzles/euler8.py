@@ -11,7 +11,6 @@ from python.tools import utils, profile
 from python.tools.primes import product
 
 
-
 @profile.function
 def euler8():
     number = utils.load_puzzle_input("euler8")

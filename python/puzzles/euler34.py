@@ -14,19 +14,19 @@ Note: as 1! = 1 and 2! = 2 are not sums they are not included.
 
 import math
 
+
 def euler34():
     ...
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
 
     N = 3000000  # upper limit for N and factorial sum intersecting
     ns = range(3, N)  # skip 1 and 2
     factorials = [math.factorial(i) for i in range(10)]  # precalculate factorials
 
-
     def factorial_sum(number):
         return sum(factorials[int(digit)] for digit in str(number))
-
 
     fac_sums = []
     solutions = []

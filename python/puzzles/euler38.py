@@ -24,7 +24,8 @@ def is_pandigital(i):
     i = str(i)
     return True if sorted(i) == constant else False
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
 
     constant = [str(i) for i in range(1, 10)]
     pans = []

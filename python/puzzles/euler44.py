@@ -19,19 +19,16 @@ import matplotlib.pyplot as plt, numpy as np
 from functools import reduce
 from math import sqrt
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 
     def pent(n):
         return int(n * (3 * n - 1) / 2)
 
-
     pk = 1
-
 
     def is_pent(P):
         n = (0.5 + sqrt(0.25 + 6 * P)) / 3
         return True if n % 1 == 0 else False
-
 
     # Psums, Pdifs, Ds = [], [], []
     # pents = [pent(n) for n in range(1, 10)]

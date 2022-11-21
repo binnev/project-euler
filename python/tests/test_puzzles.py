@@ -4,7 +4,8 @@ from python import puzzles
 
 
 @pytest.mark.parametrize(
-    "func, expected_answer", [
+    "func, expected_answer",
+    [
         (puzzles.euler1.euler1, 233168),
         (puzzles.euler2.euler2, 4613732),
         (puzzles.euler3.euler3, 6857),
@@ -48,7 +49,7 @@ from python import puzzles
         # (puzzles.euler41.euler41, 7652413),
         # (puzzles.euler42.euler42, 162),
         # (puzzles.euler43.euler43, 16695334890),
-    ]
+    ],
 )
 def test_all(func, expected_answer):
     assert func() == expected_answer

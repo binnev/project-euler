@@ -21,7 +21,8 @@ Find the sum of all 0 to 9 pandigital numbers with this property.
 """
 from itertools import combinations, permutations
 import sys
-if __name__ == '__main__':
+
+if __name__ == "__main__":
 
     codePath = r"C:\gdrive\code\python"
     if codePath not in sys.path:

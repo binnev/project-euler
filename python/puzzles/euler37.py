@@ -15,7 +15,8 @@ NOTE: 2, 3, 5, and 7 are not considered to be truncatable primes.
 """
 
 import sys
-if __name__ == '__main__':
+
+if __name__ == "__main__":
 
     codePath = "C:/gdrive/code/python"
     if codePath not in sys.path:
@@ -48,7 +49,6 @@ if __name__ == '__main__':
 
         return True
 
-
     truncatable = []
     bad = "2", "3", "5", "7"
     for p in primes:
@@ -80,7 +80,6 @@ if __name__ == '__main__':
     start = "2", "3", "5", "7"  # digits I can start the number with
     add = "1", "3", "7", "9"  # numbers I can add to the right
 
-
     def expand_number(n, level=0, storage=None):  # get the recursion working on this.
 
         if level == 0:
@@ -99,7 +98,6 @@ if __name__ == '__main__':
 
         if level == 0:
             return storage  # return the list
-
 
     truncatable = []
     for n in start:

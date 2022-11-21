@@ -37,8 +37,10 @@ def multiply():
 
     return sum(set(numbers))
 
+
 def euler1():
     return multiply()
+
 
 if __name__ == "__main__":
     assert brute() == 233168
